@@ -17,6 +17,8 @@ import argparse
 import json
 import os
 import re
+import select
+import socket
 import sys
 import threading
 import time
@@ -205,6 +207,10 @@ class DraftIngestWindows:
             keep |= (positions >= a) & (positions < b)
         if keep.any():
             self.drafter.add_context(np.asarray(feats)[keep], positions[keep])
+
+
+class ClientGone(Exception):
+    """The HTTP client closed its connection before the request finished; the work is abandoned."""
 
 
 class PrefillProgress:
@@ -410,11 +416,14 @@ class Engine:
             logits = self.model.step(t)
         return logits
 
-    def prefill(self, ids):
+    def prefill(self, ids, cancel=None):
         """Bring the model state to `ids`; returns (logits after the last token, tokens reused).
         The DeltaNet state cannot be rewound, so the state is snapshotted just before the final
         '<|im_start|>assistant' header: the next request re-renders the previous answer in its own way, but
-        everything up to that header is identical and restores from the snapshot."""
+        everything up to that header is identical and restores from the snapshot.
+        `cancel` is polled before each slice; when it returns true the model state is reset and ClientGone raised."""
+        if cancel and cancel():
+            raise ClientGone()
         n = len(self.fed)
         if n and not (len(ids) > n and ids[:n] == self.fed):  # cache miss past the model state: log where and why
             j = next((i for i, (a, b) in enumerate(zip(ids, self.fed)) if a != b), min(len(ids), n))
@@ -452,6 +461,13 @@ class Engine:
         progress = PrefillProgress(len(ids) - reused, reused)
         for cut, key in sorted(cuts) + [(len(ids), None)]:
             while cut > i:  # feed up to the snapshot point in slices (same calls: slices are whole blocks), then snapshot
+                if cancel and cancel():  # the client left: stop feeding; a partial state is not reusable, so drop it
+                    self.model.reset()
+                    if self.drafter is not None:
+                        self.drafter.reset()
+                    self.fed = []
+                    log(f"prefill: client disconnected at {i}/{len(ids)} tok; request abandoned")
+                    raise ClientGone()
                 j = min(cut, i + progress.slice) if progress.slice else cut
                 logits = self._feed(ids[i:j], ingest)
                 self.fed.extend(ids[i:j])
@@ -584,8 +600,8 @@ class Engine:
             self.decode_live = None  # /health reports idle after every turn, including a failed one
 
     def _generate(self, ids, max_tokens, temp, top_p, top_k, stop, seed, on_text, presence=None, dry=None,
-                 think_budget=0, min_p=0.0):
-        logits, reused = self.prefill(ids)
+                 think_budget=0, min_p=0.0, cancel=None):
+        logits, reused = self.prefill(ids, cancel)
         self.think_forced, self.think_n = 0, None
         decode_started = time.perf_counter()
         t_gen, out, text, finish = time.time(), [], "", "length"
@@ -888,6 +904,14 @@ def make_handler(engine):
             else:
                 self._json(404, {"error": {"message": "not found"}})
 
+        def client_gone(self):
+            """True once the peer has closed its end (the request body was fully read, so readable means EOF)."""
+            try:
+                readable, _, _ = select.select([self.connection], [], [], 0)
+                return bool(readable) and self.connection.recv(1, socket.MSG_PEEK) == b""
+            except OSError:
+                return True
+
         def do_POST(self):
             if self.path.rstrip("/") not in ("/v1/chat/completions", "/chat/completions"):
                 return self._json(404, {"error": {"message": "not found"}})
@@ -968,7 +992,7 @@ def make_handler(engine):
                                 return False
                         text, finish, n, reused, dt = engine.generate(ids, max_tokens, temp, top_p, top_k, stop,
                                                                       req.get("seed"), on_text, presence, dry, budget,
-                                                                      min_p)
+                                                                      min_p, self.client_gone)
                         tail = splitter.feed("", final=True)
                         if tail:
                             emit(tail)
@@ -988,12 +1012,15 @@ def make_handler(engine):
                             emit({}, usage=usage)
                         self.wfile.write(b"data: [DONE]\n\n")
                         self.wfile.flush()
-                    except (BrokenPipeError, ConnectionResetError):
+                    except (BrokenPipeError, ConnectionResetError, ClientGone):
                         return
                 else:
-                    text, finish, n, reused, dt = engine.generate(ids, max_tokens, temp, top_p, top_k, stop,
-                                                                  req.get("seed"), lambda d: None, presence, dry, budget,
-                                                                  min_p)
+                    try:
+                        text, finish, n, reused, dt = engine.generate(ids, max_tokens, temp, top_p, top_k, stop,
+                                                                      req.get("seed"), lambda d: None, presence, dry,
+                                                                      budget, min_p, self.client_gone)
+                    except ClientGone:
+                        return
                     reasoning, content, calls = split_output(text, thinking)
                     msg = {"role": "assistant", "content": content or (None if calls else "")}
                     if reasoning:
