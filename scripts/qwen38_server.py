@@ -257,7 +257,8 @@ class Engine:
             target = json.loads((mdir / "manifest.json").read_text())
             target_cfg = json.loads((hf / "config.json").read_text())["text_config"]
             dcfg, _ = check_drafter_pair(dpath, ddir, target, target_cfg)
-            os.environ.update(DRAFTER=str(ddir), COREAI_DRAFTER_COMPUTE="ane")
+            os.environ.update(DRAFTER=str(ddir))
+            os.environ.setdefault("COREAI_DRAFTER_COMPUTE", "ane")  # ane / gpu / cpu: set it to place the drafter
             a.draft = str(dpath)
         if self.runtime == "coreai":
             from hf_release import coreai_bridge_environment

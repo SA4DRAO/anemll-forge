@@ -152,7 +152,7 @@ def prepare(a):
                 hf_release.check_drafter_pair(pkg, directory, json.loads(manifest.read_text()), cfg)
                 args += ["--draft", str(pkg), "--drafter", str(directory)]
                 env["DRAFTER"] = str(directory)
-                env["COREAI_DRAFTER_COMPUTE"] = "ane"
+                env["COREAI_DRAFTER_COMPUTE"] = os.environ.get("COREAI_DRAFTER_COMPUTE", "ane")  # ane / gpu / cpu
         else:
             if a.prompt is not None:
                 args += ["--prompt", a.prompt]
