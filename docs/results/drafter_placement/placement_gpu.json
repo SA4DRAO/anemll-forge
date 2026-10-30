@@ -1,0 +1,1912 @@
+{
+  "os_build": "26B123",
+  "executable_identity": "python",
+  "scope": "cached specializations, not proof of live hardware execution or numerical correctness",
+  "packages": [
+    {
+      "package": "/Users/sa4drao/.anemll-forge/builds/m6-192k-ctx128k-1f15333fcf8d/chunk_L00-03.aimodel",
+      "expected_entries": [
+        "v8_8k",
+        "v8_16k",
+        "v8_32k",
+        "v8_64k",
+        "v8_96k",
+        "v8_128k",
+        "p64_8k",
+        "p64_16k",
+        "p64_32k",
+        "p64_64k",
+        "p64_96k",
+        "p32_128k"
+      ],
+      "status": "fully_ane",
+      "specializations": [
+        {
+          "manifest": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/1fe244eb4fa7e8134d72772c882928356249bb80304ddf4715d63edac58bb227/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/manifest.plist",
+          "entries": {
+            "v8_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_8k_fVxqXv3qp5yXVOO6vIWYLQ_10"
+              ]
+            },
+            "v8_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_16k_7RzVRYRQY6P3xeGplYokBA_7"
+              ]
+            },
+            "v8_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_32k_aXIRfUGgy8JCPS-Nz2xkEw_8"
+              ]
+            },
+            "v8_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_64k_kkYR-j7FiOKa4E0Z5BLoaA_9"
+              ]
+            },
+            "v8_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_96k_O3XYKIC3GSBtSAMQ2ZGmxQ_11"
+              ]
+            },
+            "v8_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_128k_2lLjtFtfTcVtsELTaXJiZQ_6"
+              ]
+            },
+            "p64_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_8k_18tnAnshnRKjUmZLC2Bn6w_4"
+              ]
+            },
+            "p64_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_16k_3sll1bng8LcdPssqxQCFbg_1"
+              ]
+            },
+            "p64_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_32k_ByIJ6L9YOY5CaHKNbOM7-Q_2"
+              ]
+            },
+            "p64_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_64k_O5D4NJzSg7ZatD3ADEcfqA_3"
+              ]
+            },
+            "p64_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_96k_O2HB-RCXYYL5Klpus23bIA_5"
+              ]
+            },
+            "p32_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p32_128k__o0O2e_x-9KP-tIFgQ6Rfg_0"
+              ]
+            }
+          },
+          "graphs": [
+            {
+              "file": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/1fe244eb4fa7e8134d72772c882928356249bb80304ddf4715d63edac58bb227/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/specialized_model_0.mpsgraph",
+              "bytes": 4117840,
+              "sha256": "bef6f8c1f62c184b8c43d8ffc4bcf05258a4317a4d7ee3d081048855535840aa",
+              "gpu_region_name_count": 0,
+              "ane_region_name_count": 12
+            }
+          ],
+          "status": "fully_ane",
+          "compile_modes": [
+            2
+          ]
+        }
+      ],
+      "source_main_hash_hex": "1fe244eb4fa7e8134d72772c882928356249bb80304ddf4715d63edac58bb227",
+      "main_hash_sha256": "c23734d21416371df27ce2981059a2f99ca8178c31aac269ded8ed1c8e771e53",
+      "metadata_sha256": "00796f6151ab038d0d58d22767ace9db76073d565d6d2065378cd5cf614c2f99",
+      "cache_directory": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/1fe244eb4fa7e8134d72772c882928356249bb80304ddf4715d63edac58bb227"
+    },
+    {
+      "package": "/Users/sa4drao/.anemll-forge/builds/m6-192k-ctx128k-1f15333fcf8d/chunk_L04-07.aimodel",
+      "expected_entries": [
+        "v8_8k",
+        "v8_16k",
+        "v8_32k",
+        "v8_64k",
+        "v8_96k",
+        "v8_128k",
+        "p64_8k",
+        "p64_16k",
+        "p64_32k",
+        "p64_64k",
+        "p64_96k",
+        "p32_128k"
+      ],
+      "status": "fully_ane",
+      "specializations": [
+        {
+          "manifest": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/838839620c5a3f4e58e6fb8beb8dfe99fa8e3febb1080e4501eb7964b9bb2ac6/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/manifest.plist",
+          "entries": {
+            "v8_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_8k_fVxqXv3qp5yXVOO6vIWYLQ_10"
+              ]
+            },
+            "v8_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_16k_7RzVRYRQY6P3xeGplYokBA_7"
+              ]
+            },
+            "v8_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_32k_aXIRfUGgy8JCPS-Nz2xkEw_8"
+              ]
+            },
+            "v8_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_64k_kkYR-j7FiOKa4E0Z5BLoaA_9"
+              ]
+            },
+            "v8_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_96k_O3XYKIC3GSBtSAMQ2ZGmxQ_11"
+              ]
+            },
+            "v8_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_128k_2lLjtFtfTcVtsELTaXJiZQ_6"
+              ]
+            },
+            "p64_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_8k_18tnAnshnRKjUmZLC2Bn6w_4"
+              ]
+            },
+            "p64_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_16k_3sll1bng8LcdPssqxQCFbg_1"
+              ]
+            },
+            "p64_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_32k_ByIJ6L9YOY5CaHKNbOM7-Q_2"
+              ]
+            },
+            "p64_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_64k_O5D4NJzSg7ZatD3ADEcfqA_3"
+              ]
+            },
+            "p64_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_96k_O2HB-RCXYYL5Klpus23bIA_5"
+              ]
+            },
+            "p32_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p32_128k__o0O2e_x-9KP-tIFgQ6Rfg_0"
+              ]
+            }
+          },
+          "graphs": [
+            {
+              "file": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/838839620c5a3f4e58e6fb8beb8dfe99fa8e3febb1080e4501eb7964b9bb2ac6/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/specialized_model_0.mpsgraph",
+              "bytes": 4118782,
+              "sha256": "c349d8bbed4e26d6f1eefe4b5b25087746b2e98904088f0f2524ed22c2b1b044",
+              "gpu_region_name_count": 0,
+              "ane_region_name_count": 12
+            }
+          ],
+          "status": "fully_ane",
+          "compile_modes": [
+            2
+          ]
+        }
+      ],
+      "source_main_hash_hex": "838839620c5a3f4e58e6fb8beb8dfe99fa8e3febb1080e4501eb7964b9bb2ac6",
+      "main_hash_sha256": "938708c0f38bbf4aa64f0159a14cfea0e90965fb382a6dba2c17fc49d96ea6b7",
+      "metadata_sha256": "c0d3625c3518a063289c73d256dcaf9646311ada9ea37ff761340aa9f0f621ee",
+      "cache_directory": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/838839620c5a3f4e58e6fb8beb8dfe99fa8e3febb1080e4501eb7964b9bb2ac6"
+    },
+    {
+      "package": "/Users/sa4drao/.anemll-forge/builds/m6-192k-ctx128k-1f15333fcf8d/chunk_L08-11.aimodel",
+      "expected_entries": [
+        "v8_8k",
+        "v8_16k",
+        "v8_32k",
+        "v8_64k",
+        "v8_96k",
+        "v8_128k",
+        "p64_8k",
+        "p64_16k",
+        "p64_32k",
+        "p64_64k",
+        "p64_96k",
+        "p32_128k"
+      ],
+      "status": "fully_ane",
+      "specializations": [
+        {
+          "manifest": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/b6cd3b4206a011d46169eb1fb323ee3f0419aed6c39d51442eaee00f0e6ca00f/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/manifest.plist",
+          "entries": {
+            "v8_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_8k_fVxqXv3qp5yXVOO6vIWYLQ_10"
+              ]
+            },
+            "v8_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_16k_7RzVRYRQY6P3xeGplYokBA_7"
+              ]
+            },
+            "v8_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_32k_aXIRfUGgy8JCPS-Nz2xkEw_8"
+              ]
+            },
+            "v8_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_64k_kkYR-j7FiOKa4E0Z5BLoaA_9"
+              ]
+            },
+            "v8_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_96k_O3XYKIC3GSBtSAMQ2ZGmxQ_11"
+              ]
+            },
+            "v8_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_128k_2lLjtFtfTcVtsELTaXJiZQ_6"
+              ]
+            },
+            "p64_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_8k_18tnAnshnRKjUmZLC2Bn6w_4"
+              ]
+            },
+            "p64_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_16k_3sll1bng8LcdPssqxQCFbg_1"
+              ]
+            },
+            "p64_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_32k_ByIJ6L9YOY5CaHKNbOM7-Q_2"
+              ]
+            },
+            "p64_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_64k_O5D4NJzSg7ZatD3ADEcfqA_3"
+              ]
+            },
+            "p64_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_96k_O2HB-RCXYYL5Klpus23bIA_5"
+              ]
+            },
+            "p32_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p32_128k__o0O2e_x-9KP-tIFgQ6Rfg_0"
+              ]
+            }
+          },
+          "graphs": [
+            {
+              "file": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/b6cd3b4206a011d46169eb1fb323ee3f0419aed6c39d51442eaee00f0e6ca00f/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/specialized_model_0.mpsgraph",
+              "bytes": 4117832,
+              "sha256": "f86c2412c377724036b9a593e0e4f0716017f84d035408a2c10dc11ec45e1d94",
+              "gpu_region_name_count": 0,
+              "ane_region_name_count": 12
+            }
+          ],
+          "status": "fully_ane",
+          "compile_modes": [
+            2
+          ]
+        }
+      ],
+      "source_main_hash_hex": "b6cd3b4206a011d46169eb1fb323ee3f0419aed6c39d51442eaee00f0e6ca00f",
+      "main_hash_sha256": "925bef9e244a379a74d984062cf4aac6eda7065d497df9c0db8aa112c20377eb",
+      "metadata_sha256": "a4c8641e6ccc9e2fd27062fa3ac9c2f9b2d848f5c88ace3bfbd438d91bd70b99",
+      "cache_directory": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/b6cd3b4206a011d46169eb1fb323ee3f0419aed6c39d51442eaee00f0e6ca00f"
+    },
+    {
+      "package": "/Users/sa4drao/.anemll-forge/builds/m6-192k-ctx128k-1f15333fcf8d/chunk_L12-15.aimodel",
+      "expected_entries": [
+        "v8_8k",
+        "v8_16k",
+        "v8_32k",
+        "v8_64k",
+        "v8_96k",
+        "v8_128k",
+        "p64_8k",
+        "p64_16k",
+        "p64_32k",
+        "p64_64k",
+        "p64_96k",
+        "p32_128k"
+      ],
+      "status": "fully_ane",
+      "specializations": [
+        {
+          "manifest": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/a0bc417ffce7c5a829137ff4e12f3c2dc7e34478e02919e7402eec061e2c710d/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/manifest.plist",
+          "entries": {
+            "v8_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_8k_fVxqXv3qp5yXVOO6vIWYLQ_10"
+              ]
+            },
+            "v8_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_16k_7RzVRYRQY6P3xeGplYokBA_7"
+              ]
+            },
+            "v8_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_32k_aXIRfUGgy8JCPS-Nz2xkEw_8"
+              ]
+            },
+            "v8_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_64k_kkYR-j7FiOKa4E0Z5BLoaA_9"
+              ]
+            },
+            "v8_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_96k_O3XYKIC3GSBtSAMQ2ZGmxQ_11"
+              ]
+            },
+            "v8_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_128k_2lLjtFtfTcVtsELTaXJiZQ_6"
+              ]
+            },
+            "p64_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_8k_18tnAnshnRKjUmZLC2Bn6w_4"
+              ]
+            },
+            "p64_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_16k_3sll1bng8LcdPssqxQCFbg_1"
+              ]
+            },
+            "p64_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_32k_ByIJ6L9YOY5CaHKNbOM7-Q_2"
+              ]
+            },
+            "p64_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_64k_O5D4NJzSg7ZatD3ADEcfqA_3"
+              ]
+            },
+            "p64_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_96k_O2HB-RCXYYL5Klpus23bIA_5"
+              ]
+            },
+            "p32_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p32_128k__o0O2e_x-9KP-tIFgQ6Rfg_0"
+              ]
+            }
+          },
+          "graphs": [
+            {
+              "file": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/a0bc417ffce7c5a829137ff4e12f3c2dc7e34478e02919e7402eec061e2c710d/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/specialized_model_0.mpsgraph",
+              "bytes": 4117840,
+              "sha256": "a5c81fefe28e6388ba64960fba6fb13a5d415fed39376fb2c860112f31f80275",
+              "gpu_region_name_count": 0,
+              "ane_region_name_count": 12
+            }
+          ],
+          "status": "fully_ane",
+          "compile_modes": [
+            2
+          ]
+        }
+      ],
+      "source_main_hash_hex": "a0bc417ffce7c5a829137ff4e12f3c2dc7e34478e02919e7402eec061e2c710d",
+      "main_hash_sha256": "3400d95b7266ee9e1fb7c17b27388d38f4e31c14b310acbec6c02ef2a0509537",
+      "metadata_sha256": "6668610887da382f81de5a79d8fccba6c8aebea00e00de5b0c2918af7363d365",
+      "cache_directory": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/a0bc417ffce7c5a829137ff4e12f3c2dc7e34478e02919e7402eec061e2c710d"
+    },
+    {
+      "package": "/Users/sa4drao/.anemll-forge/builds/m6-192k-ctx128k-1f15333fcf8d/chunk_L16-19.aimodel",
+      "expected_entries": [
+        "v8_8k",
+        "v8_16k",
+        "v8_32k",
+        "v8_64k",
+        "v8_96k",
+        "v8_128k",
+        "p64_8k",
+        "p64_16k",
+        "p64_32k",
+        "p64_64k",
+        "p64_96k",
+        "p32_128k"
+      ],
+      "status": "fully_ane",
+      "specializations": [
+        {
+          "manifest": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/ae3be5774de4b62635de447f75f99d2d5b3882c4416095fb2f620d7474699a96/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/manifest.plist",
+          "entries": {
+            "v8_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_8k_fVxqXv3qp5yXVOO6vIWYLQ_10"
+              ]
+            },
+            "v8_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_16k_7RzVRYRQY6P3xeGplYokBA_7"
+              ]
+            },
+            "v8_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_32k_aXIRfUGgy8JCPS-Nz2xkEw_8"
+              ]
+            },
+            "v8_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_64k_kkYR-j7FiOKa4E0Z5BLoaA_9"
+              ]
+            },
+            "v8_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_96k_O3XYKIC3GSBtSAMQ2ZGmxQ_11"
+              ]
+            },
+            "v8_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_128k_2lLjtFtfTcVtsELTaXJiZQ_6"
+              ]
+            },
+            "p64_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_8k_18tnAnshnRKjUmZLC2Bn6w_4"
+              ]
+            },
+            "p64_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_16k_3sll1bng8LcdPssqxQCFbg_1"
+              ]
+            },
+            "p64_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_32k_ByIJ6L9YOY5CaHKNbOM7-Q_2"
+              ]
+            },
+            "p64_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_64k_O5D4NJzSg7ZatD3ADEcfqA_3"
+              ]
+            },
+            "p64_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_96k_O2HB-RCXYYL5Klpus23bIA_5"
+              ]
+            },
+            "p32_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p32_128k__o0O2e_x-9KP-tIFgQ6Rfg_0"
+              ]
+            }
+          },
+          "graphs": [
+            {
+              "file": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/ae3be5774de4b62635de447f75f99d2d5b3882c4416095fb2f620d7474699a96/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/specialized_model_0.mpsgraph",
+              "bytes": 4117833,
+              "sha256": "9efcfd286b409df3ba53c82017266b4aa812542bb0192d61651376df1bf3b77e",
+              "gpu_region_name_count": 0,
+              "ane_region_name_count": 12
+            }
+          ],
+          "status": "fully_ane",
+          "compile_modes": [
+            2
+          ]
+        }
+      ],
+      "source_main_hash_hex": "ae3be5774de4b62635de447f75f99d2d5b3882c4416095fb2f620d7474699a96",
+      "main_hash_sha256": "58a2b1cfedc659935c13ac846ff6824b91c00b09c42e0a4300dbf1f1faeef1d9",
+      "metadata_sha256": "ae665701480e010abc9fafa52d8374b0a1e9a45d019e69fa7e5b1ec2c53f6e2f",
+      "cache_directory": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/ae3be5774de4b62635de447f75f99d2d5b3882c4416095fb2f620d7474699a96"
+    },
+    {
+      "package": "/Users/sa4drao/.anemll-forge/builds/m6-192k-ctx128k-1f15333fcf8d/chunk_L20-23.aimodel",
+      "expected_entries": [
+        "v8_8k",
+        "v8_16k",
+        "v8_32k",
+        "v8_64k",
+        "v8_96k",
+        "v8_128k",
+        "p64_8k",
+        "p64_16k",
+        "p64_32k",
+        "p64_64k",
+        "p64_96k",
+        "p32_128k"
+      ],
+      "status": "fully_ane",
+      "specializations": [
+        {
+          "manifest": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/e2eb5d07e89402fb36d86db8fecf95b351c0da4fd596ead677170a4bd918d31d/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/manifest.plist",
+          "entries": {
+            "v8_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_8k_fVxqXv3qp5yXVOO6vIWYLQ_10"
+              ]
+            },
+            "v8_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_16k_7RzVRYRQY6P3xeGplYokBA_7"
+              ]
+            },
+            "v8_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_32k_aXIRfUGgy8JCPS-Nz2xkEw_8"
+              ]
+            },
+            "v8_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_64k_kkYR-j7FiOKa4E0Z5BLoaA_9"
+              ]
+            },
+            "v8_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_96k_O3XYKIC3GSBtSAMQ2ZGmxQ_11"
+              ]
+            },
+            "v8_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_128k_2lLjtFtfTcVtsELTaXJiZQ_6"
+              ]
+            },
+            "p64_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_8k_18tnAnshnRKjUmZLC2Bn6w_4"
+              ]
+            },
+            "p64_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_16k_3sll1bng8LcdPssqxQCFbg_1"
+              ]
+            },
+            "p64_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_32k_ByIJ6L9YOY5CaHKNbOM7-Q_2"
+              ]
+            },
+            "p64_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_64k_O5D4NJzSg7ZatD3ADEcfqA_3"
+              ]
+            },
+            "p64_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_96k_O2HB-RCXYYL5Klpus23bIA_5"
+              ]
+            },
+            "p32_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p32_128k__o0O2e_x-9KP-tIFgQ6Rfg_0"
+              ]
+            }
+          },
+          "graphs": [
+            {
+              "file": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/e2eb5d07e89402fb36d86db8fecf95b351c0da4fd596ead677170a4bd918d31d/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/specialized_model_0.mpsgraph",
+              "bytes": 4117832,
+              "sha256": "2e832200951f47d0c70b22f384ac67979a8b5e681c64668d1123d8e484f55c20",
+              "gpu_region_name_count": 0,
+              "ane_region_name_count": 12
+            }
+          ],
+          "status": "fully_ane",
+          "compile_modes": [
+            2
+          ]
+        }
+      ],
+      "source_main_hash_hex": "e2eb5d07e89402fb36d86db8fecf95b351c0da4fd596ead677170a4bd918d31d",
+      "main_hash_sha256": "6b9fb90bf11f8dfc0a9b43f9706ad2d042214d9aacff293eeddd61afcbacfe58",
+      "metadata_sha256": "797bdef3c44e1ec7ef03095d58b7dc0c52c739055e1ec40702b5159148904dd3",
+      "cache_directory": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/e2eb5d07e89402fb36d86db8fecf95b351c0da4fd596ead677170a4bd918d31d"
+    },
+    {
+      "package": "/Users/sa4drao/.anemll-forge/builds/m6-192k-ctx128k-1f15333fcf8d/chunk_L24-27.aimodel",
+      "expected_entries": [
+        "v8_8k",
+        "v8_16k",
+        "v8_32k",
+        "v8_64k",
+        "v8_96k",
+        "v8_128k",
+        "p64_8k",
+        "p64_16k",
+        "p64_32k",
+        "p64_64k",
+        "p64_96k",
+        "p32_128k"
+      ],
+      "status": "fully_ane",
+      "specializations": [
+        {
+          "manifest": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/da952069fe1330139e1d48527fabe3983b5fd0e6bb8604dfffba5f31bace2100/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/manifest.plist",
+          "entries": {
+            "v8_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_8k_fVxqXv3qp5yXVOO6vIWYLQ_10"
+              ]
+            },
+            "v8_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_16k_7RzVRYRQY6P3xeGplYokBA_7"
+              ]
+            },
+            "v8_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_32k_aXIRfUGgy8JCPS-Nz2xkEw_8"
+              ]
+            },
+            "v8_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_64k_kkYR-j7FiOKa4E0Z5BLoaA_9"
+              ]
+            },
+            "v8_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_96k_O3XYKIC3GSBtSAMQ2ZGmxQ_11"
+              ]
+            },
+            "v8_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_128k_2lLjtFtfTcVtsELTaXJiZQ_6"
+              ]
+            },
+            "p64_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_8k_18tnAnshnRKjUmZLC2Bn6w_4"
+              ]
+            },
+            "p64_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_16k_3sll1bng8LcdPssqxQCFbg_1"
+              ]
+            },
+            "p64_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_32k_ByIJ6L9YOY5CaHKNbOM7-Q_2"
+              ]
+            },
+            "p64_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_64k_O5D4NJzSg7ZatD3ADEcfqA_3"
+              ]
+            },
+            "p64_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_96k_O2HB-RCXYYL5Klpus23bIA_5"
+              ]
+            },
+            "p32_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p32_128k__o0O2e_x-9KP-tIFgQ6Rfg_0"
+              ]
+            }
+          },
+          "graphs": [
+            {
+              "file": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/da952069fe1330139e1d48527fabe3983b5fd0e6bb8604dfffba5f31bace2100/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/specialized_model_0.mpsgraph",
+              "bytes": 4117494,
+              "sha256": "30fa6f138503431cb9fbd0ba3b006863a0470f74c95e649aa82fb8144d4eea91",
+              "gpu_region_name_count": 0,
+              "ane_region_name_count": 12
+            }
+          ],
+          "status": "fully_ane",
+          "compile_modes": [
+            2
+          ]
+        }
+      ],
+      "source_main_hash_hex": "da952069fe1330139e1d48527fabe3983b5fd0e6bb8604dfffba5f31bace2100",
+      "main_hash_sha256": "cc73f425c7cc94fd745b0af7a6d9f2e3de54423b5358d4e4ad52789bbdb5b238",
+      "metadata_sha256": "bad515843d2faf8de4f2929c4342c3167b426e12e4b6a05ca03def75e3af83fb",
+      "cache_directory": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/da952069fe1330139e1d48527fabe3983b5fd0e6bb8604dfffba5f31bace2100"
+    },
+    {
+      "package": "/Users/sa4drao/.anemll-forge/builds/m6-192k-ctx128k-1f15333fcf8d/chunk_L28-31.aimodel",
+      "expected_entries": [
+        "v8_8k",
+        "v8_16k",
+        "v8_32k",
+        "v8_64k",
+        "v8_96k",
+        "v8_128k",
+        "p64_8k",
+        "p64_16k",
+        "p64_32k",
+        "p64_64k",
+        "p64_96k",
+        "p32_128k"
+      ],
+      "status": "fully_ane",
+      "specializations": [
+        {
+          "manifest": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/ab96f007b78a5c947d5ea724d344e2172f98772acc2ab163c9b6c605ac3ab54c/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/manifest.plist",
+          "entries": {
+            "v8_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_8k_fVxqXv3qp5yXVOO6vIWYLQ_10"
+              ]
+            },
+            "v8_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_16k_7RzVRYRQY6P3xeGplYokBA_7"
+              ]
+            },
+            "v8_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_32k_aXIRfUGgy8JCPS-Nz2xkEw_8"
+              ]
+            },
+            "v8_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_64k_kkYR-j7FiOKa4E0Z5BLoaA_9"
+              ]
+            },
+            "v8_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_96k_O3XYKIC3GSBtSAMQ2ZGmxQ_11"
+              ]
+            },
+            "v8_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_128k_2lLjtFtfTcVtsELTaXJiZQ_6"
+              ]
+            },
+            "p64_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_8k_18tnAnshnRKjUmZLC2Bn6w_4"
+              ]
+            },
+            "p64_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_16k_3sll1bng8LcdPssqxQCFbg_1"
+              ]
+            },
+            "p64_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_32k_ByIJ6L9YOY5CaHKNbOM7-Q_2"
+              ]
+            },
+            "p64_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_64k_O5D4NJzSg7ZatD3ADEcfqA_3"
+              ]
+            },
+            "p64_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_96k_O2HB-RCXYYL5Klpus23bIA_5"
+              ]
+            },
+            "p32_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p32_128k__o0O2e_x-9KP-tIFgQ6Rfg_0"
+              ]
+            }
+          },
+          "graphs": [
+            {
+              "file": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/ab96f007b78a5c947d5ea724d344e2172f98772acc2ab163c9b6c605ac3ab54c/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/specialized_model_0.mpsgraph",
+              "bytes": 4117495,
+              "sha256": "47663063d7a6010ead7da27520cc36a0496e306666f680302732ba26d268ea3d",
+              "gpu_region_name_count": 0,
+              "ane_region_name_count": 12
+            }
+          ],
+          "status": "fully_ane",
+          "compile_modes": [
+            2
+          ]
+        }
+      ],
+      "source_main_hash_hex": "ab96f007b78a5c947d5ea724d344e2172f98772acc2ab163c9b6c605ac3ab54c",
+      "main_hash_sha256": "ebbc33ac77585d02b99dbb876d0329735a533d38269ed2ca40e352ffd3371a66",
+      "metadata_sha256": "23de25077ff369e83a50551653000dc7ff6e7fa48f225ecd9962ac11b0bb918d",
+      "cache_directory": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/ab96f007b78a5c947d5ea724d344e2172f98772acc2ab163c9b6c605ac3ab54c"
+    },
+    {
+      "package": "/Users/sa4drao/.anemll-forge/builds/m6-192k-ctx128k-1f15333fcf8d/chunk_L32-35.aimodel",
+      "expected_entries": [
+        "v8_8k",
+        "v8_16k",
+        "v8_32k",
+        "v8_64k",
+        "v8_96k",
+        "v8_128k",
+        "p64_8k",
+        "p64_16k",
+        "p64_32k",
+        "p64_64k",
+        "p64_96k",
+        "p32_128k"
+      ],
+      "status": "fully_ane",
+      "specializations": [
+        {
+          "manifest": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/927eebccd61c7db68aa1a1a47aab4dbb66ce13f8c182a7644a04519e6787607d/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/manifest.plist",
+          "entries": {
+            "v8_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_8k_fVxqXv3qp5yXVOO6vIWYLQ_10"
+              ]
+            },
+            "v8_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_16k_7RzVRYRQY6P3xeGplYokBA_7"
+              ]
+            },
+            "v8_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_32k_aXIRfUGgy8JCPS-Nz2xkEw_8"
+              ]
+            },
+            "v8_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_64k_kkYR-j7FiOKa4E0Z5BLoaA_9"
+              ]
+            },
+            "v8_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_96k_O3XYKIC3GSBtSAMQ2ZGmxQ_11"
+              ]
+            },
+            "v8_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_128k_2lLjtFtfTcVtsELTaXJiZQ_6"
+              ]
+            },
+            "p64_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_8k_18tnAnshnRKjUmZLC2Bn6w_4"
+              ]
+            },
+            "p64_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_16k_3sll1bng8LcdPssqxQCFbg_1"
+              ]
+            },
+            "p64_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_32k_ByIJ6L9YOY5CaHKNbOM7-Q_2"
+              ]
+            },
+            "p64_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_64k_O5D4NJzSg7ZatD3ADEcfqA_3"
+              ]
+            },
+            "p64_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_96k_O2HB-RCXYYL5Klpus23bIA_5"
+              ]
+            },
+            "p32_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p32_128k__o0O2e_x-9KP-tIFgQ6Rfg_0"
+              ]
+            }
+          },
+          "graphs": [
+            {
+              "file": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/927eebccd61c7db68aa1a1a47aab4dbb66ce13f8c182a7644a04519e6787607d/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/specialized_model_0.mpsgraph",
+              "bytes": 4118467,
+              "sha256": "e0eebfec9d6cdeb852b7e667921ad00e86808a33925a7c177c653aab1bcc9e11",
+              "gpu_region_name_count": 0,
+              "ane_region_name_count": 12
+            }
+          ],
+          "status": "fully_ane",
+          "compile_modes": [
+            2
+          ]
+        }
+      ],
+      "source_main_hash_hex": "927eebccd61c7db68aa1a1a47aab4dbb66ce13f8c182a7644a04519e6787607d",
+      "main_hash_sha256": "5a06e9dc4062f68a2d7be5e93fd54a04304eadc916e1e4f13de05a48a620bb03",
+      "metadata_sha256": "14ca7b684d8f06a02f62d11813b4705daa753e8d13beed415be20ef1025d85e9",
+      "cache_directory": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/927eebccd61c7db68aa1a1a47aab4dbb66ce13f8c182a7644a04519e6787607d"
+    },
+    {
+      "package": "/Users/sa4drao/.anemll-forge/builds/m6-192k-ctx128k-1f15333fcf8d/chunk_L36-39.aimodel",
+      "expected_entries": [
+        "v8_8k",
+        "v8_16k",
+        "v8_32k",
+        "v8_64k",
+        "v8_96k",
+        "v8_128k",
+        "p64_8k",
+        "p64_16k",
+        "p64_32k",
+        "p64_64k",
+        "p64_96k",
+        "p32_128k"
+      ],
+      "status": "fully_ane",
+      "specializations": [
+        {
+          "manifest": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/3104e34a115f8fa03550344740be8d3122859a011d5af51dc2dfbdcbde70137c/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/manifest.plist",
+          "entries": {
+            "v8_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_8k_fVxqXv3qp5yXVOO6vIWYLQ_10"
+              ]
+            },
+            "v8_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_16k_7RzVRYRQY6P3xeGplYokBA_7"
+              ]
+            },
+            "v8_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_32k_aXIRfUGgy8JCPS-Nz2xkEw_8"
+              ]
+            },
+            "v8_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_64k_kkYR-j7FiOKa4E0Z5BLoaA_9"
+              ]
+            },
+            "v8_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_96k_O3XYKIC3GSBtSAMQ2ZGmxQ_11"
+              ]
+            },
+            "v8_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_128k_2lLjtFtfTcVtsELTaXJiZQ_6"
+              ]
+            },
+            "p64_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_8k_18tnAnshnRKjUmZLC2Bn6w_4"
+              ]
+            },
+            "p64_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_16k_3sll1bng8LcdPssqxQCFbg_1"
+              ]
+            },
+            "p64_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_32k_ByIJ6L9YOY5CaHKNbOM7-Q_2"
+              ]
+            },
+            "p64_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_64k_O5D4NJzSg7ZatD3ADEcfqA_3"
+              ]
+            },
+            "p64_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_96k_O2HB-RCXYYL5Klpus23bIA_5"
+              ]
+            },
+            "p32_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p32_128k__o0O2e_x-9KP-tIFgQ6Rfg_0"
+              ]
+            }
+          },
+          "graphs": [
+            {
+              "file": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/3104e34a115f8fa03550344740be8d3122859a011d5af51dc2dfbdcbde70137c/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/specialized_model_0.mpsgraph",
+              "bytes": 4117494,
+              "sha256": "ae87b1466a15d6837a5957cc4e29035584381c0e6778f5e368714a11d07eca25",
+              "gpu_region_name_count": 0,
+              "ane_region_name_count": 12
+            }
+          ],
+          "status": "fully_ane",
+          "compile_modes": [
+            2
+          ]
+        }
+      ],
+      "source_main_hash_hex": "3104e34a115f8fa03550344740be8d3122859a011d5af51dc2dfbdcbde70137c",
+      "main_hash_sha256": "3da63703452fb84e538a75e42480705e9cf12ad8a61eae77e55b3e03ce350fde",
+      "metadata_sha256": "74265eeeca3bdce0ee460706f37487f3ce7c39e203ac986f68421e5398d3c148",
+      "cache_directory": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/3104e34a115f8fa03550344740be8d3122859a011d5af51dc2dfbdcbde70137c"
+    },
+    {
+      "package": "/Users/sa4drao/.anemll-forge/builds/m6-192k-ctx128k-1f15333fcf8d/chunk_L40-43.aimodel",
+      "expected_entries": [
+        "v8_8k",
+        "v8_16k",
+        "v8_32k",
+        "v8_64k",
+        "v8_96k",
+        "v8_128k",
+        "p64_8k",
+        "p64_16k",
+        "p64_32k",
+        "p64_64k",
+        "p64_96k",
+        "p32_128k"
+      ],
+      "status": "fully_ane",
+      "specializations": [
+        {
+          "manifest": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/4801ace8f2b11cd7d6ecf07c790f02375313e9e3f9840a588c320d3dab3d806a/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/manifest.plist",
+          "entries": {
+            "v8_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_8k_fVxqXv3qp5yXVOO6vIWYLQ_10"
+              ]
+            },
+            "v8_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_16k_7RzVRYRQY6P3xeGplYokBA_7"
+              ]
+            },
+            "v8_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_32k_aXIRfUGgy8JCPS-Nz2xkEw_8"
+              ]
+            },
+            "v8_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_64k_kkYR-j7FiOKa4E0Z5BLoaA_9"
+              ]
+            },
+            "v8_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_96k_O3XYKIC3GSBtSAMQ2ZGmxQ_11"
+              ]
+            },
+            "v8_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_128k_2lLjtFtfTcVtsELTaXJiZQ_6"
+              ]
+            },
+            "p64_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_8k_18tnAnshnRKjUmZLC2Bn6w_4"
+              ]
+            },
+            "p64_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_16k_3sll1bng8LcdPssqxQCFbg_1"
+              ]
+            },
+            "p64_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_32k_ByIJ6L9YOY5CaHKNbOM7-Q_2"
+              ]
+            },
+            "p64_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_64k_O5D4NJzSg7ZatD3ADEcfqA_3"
+              ]
+            },
+            "p64_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_96k_O2HB-RCXYYL5Klpus23bIA_5"
+              ]
+            },
+            "p32_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p32_128k__o0O2e_x-9KP-tIFgQ6Rfg_0"
+              ]
+            }
+          },
+          "graphs": [
+            {
+              "file": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/4801ace8f2b11cd7d6ecf07c790f02375313e9e3f9840a588c320d3dab3d806a/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/specialized_model_0.mpsgraph",
+              "bytes": 4117502,
+              "sha256": "d5f72e1a4b78b8bc7d575c6abe85d68cccaeeee4dbeea6d1ce2a9d12749f066e",
+              "gpu_region_name_count": 0,
+              "ane_region_name_count": 12
+            }
+          ],
+          "status": "fully_ane",
+          "compile_modes": [
+            2
+          ]
+        }
+      ],
+      "source_main_hash_hex": "4801ace8f2b11cd7d6ecf07c790f02375313e9e3f9840a588c320d3dab3d806a",
+      "main_hash_sha256": "c32622f4c68668c8eba9f7565228849e3eda606208176c39e52c238294f295f7",
+      "metadata_sha256": "0c80a3ca7aeb188483635436b08799b1ddcfc1203ac1f64253fa8f231ecbb473",
+      "cache_directory": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/4801ace8f2b11cd7d6ecf07c790f02375313e9e3f9840a588c320d3dab3d806a"
+    },
+    {
+      "package": "/Users/sa4drao/.anemll-forge/builds/m6-192k-ctx128k-1f15333fcf8d/chunk_L44-47.aimodel",
+      "expected_entries": [
+        "v8_8k",
+        "v8_16k",
+        "v8_32k",
+        "v8_64k",
+        "v8_96k",
+        "v8_128k",
+        "p64_8k",
+        "p64_16k",
+        "p64_32k",
+        "p64_64k",
+        "p64_96k",
+        "p32_128k"
+      ],
+      "status": "fully_ane",
+      "specializations": [
+        {
+          "manifest": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/fce41dd9abf9c41cadb27a62055932b08f1df6e26ee22f9bfff69b07a849e9cf/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/manifest.plist",
+          "entries": {
+            "v8_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_8k_fVxqXv3qp5yXVOO6vIWYLQ_10"
+              ]
+            },
+            "v8_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_16k_7RzVRYRQY6P3xeGplYokBA_7"
+              ]
+            },
+            "v8_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_32k_aXIRfUGgy8JCPS-Nz2xkEw_8"
+              ]
+            },
+            "v8_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_64k_kkYR-j7FiOKa4E0Z5BLoaA_9"
+              ]
+            },
+            "v8_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_96k_O3XYKIC3GSBtSAMQ2ZGmxQ_11"
+              ]
+            },
+            "v8_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_128k_2lLjtFtfTcVtsELTaXJiZQ_6"
+              ]
+            },
+            "p64_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_8k_18tnAnshnRKjUmZLC2Bn6w_4"
+              ]
+            },
+            "p64_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_16k_3sll1bng8LcdPssqxQCFbg_1"
+              ]
+            },
+            "p64_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_32k_ByIJ6L9YOY5CaHKNbOM7-Q_2"
+              ]
+            },
+            "p64_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_64k_O5D4NJzSg7ZatD3ADEcfqA_3"
+              ]
+            },
+            "p64_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_96k_O2HB-RCXYYL5Klpus23bIA_5"
+              ]
+            },
+            "p32_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p32_128k__o0O2e_x-9KP-tIFgQ6Rfg_0"
+              ]
+            }
+          },
+          "graphs": [
+            {
+              "file": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/fce41dd9abf9c41cadb27a62055932b08f1df6e26ee22f9bfff69b07a849e9cf/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/specialized_model_0.mpsgraph",
+              "bytes": 4117512,
+              "sha256": "15f4ceeeb75b21fa0135bc96052eb59909b72a43b0f404b9f757d9bc38ada3b9",
+              "gpu_region_name_count": 0,
+              "ane_region_name_count": 12
+            }
+          ],
+          "status": "fully_ane",
+          "compile_modes": [
+            2
+          ]
+        }
+      ],
+      "source_main_hash_hex": "fce41dd9abf9c41cadb27a62055932b08f1df6e26ee22f9bfff69b07a849e9cf",
+      "main_hash_sha256": "2066a6b52874bea92961b505ffd9bfef289550d5382618619ce5858cb831fdbf",
+      "metadata_sha256": "31fff839e644614cf1336c6f9e0def3998f00a0aceabfc2ee65b3109d182a9e0",
+      "cache_directory": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/fce41dd9abf9c41cadb27a62055932b08f1df6e26ee22f9bfff69b07a849e9cf"
+    },
+    {
+      "package": "/Users/sa4drao/.anemll-forge/builds/m6-192k-ctx128k-1f15333fcf8d/chunk_L48-51.aimodel",
+      "expected_entries": [
+        "v8_8k",
+        "v8_16k",
+        "v8_32k",
+        "v8_64k",
+        "v8_96k",
+        "v8_128k",
+        "p64_8k",
+        "p64_16k",
+        "p64_32k",
+        "p64_64k",
+        "p64_96k",
+        "p32_128k"
+      ],
+      "status": "fully_ane",
+      "specializations": [
+        {
+          "manifest": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/2000665a8c1c4115576683e64c12376a7b4d5cc3dcfe74bdd1ca5516cedfd3a7/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/manifest.plist",
+          "entries": {
+            "v8_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_8k_fVxqXv3qp5yXVOO6vIWYLQ_10"
+              ]
+            },
+            "v8_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_16k_7RzVRYRQY6P3xeGplYokBA_7"
+              ]
+            },
+            "v8_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_32k_aXIRfUGgy8JCPS-Nz2xkEw_8"
+              ]
+            },
+            "v8_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_64k_kkYR-j7FiOKa4E0Z5BLoaA_9"
+              ]
+            },
+            "v8_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_96k_O3XYKIC3GSBtSAMQ2ZGmxQ_11"
+              ]
+            },
+            "v8_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_128k_2lLjtFtfTcVtsELTaXJiZQ_6"
+              ]
+            },
+            "p64_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_8k_18tnAnshnRKjUmZLC2Bn6w_4"
+              ]
+            },
+            "p64_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_16k_3sll1bng8LcdPssqxQCFbg_1"
+              ]
+            },
+            "p64_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_32k_ByIJ6L9YOY5CaHKNbOM7-Q_2"
+              ]
+            },
+            "p64_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_64k_O5D4NJzSg7ZatD3ADEcfqA_3"
+              ]
+            },
+            "p64_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_96k_O2HB-RCXYYL5Klpus23bIA_5"
+              ]
+            },
+            "p32_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p32_128k__o0O2e_x-9KP-tIFgQ6Rfg_0"
+              ]
+            }
+          },
+          "graphs": [
+            {
+              "file": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/2000665a8c1c4115576683e64c12376a7b4d5cc3dcfe74bdd1ca5516cedfd3a7/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/specialized_model_0.mpsgraph",
+              "bytes": 4117497,
+              "sha256": "e2e5d8e2899745bd43caa450cdd3d50d1bdf04998f01b550b07b179336049dd9",
+              "gpu_region_name_count": 0,
+              "ane_region_name_count": 12
+            }
+          ],
+          "status": "fully_ane",
+          "compile_modes": [
+            2
+          ]
+        }
+      ],
+      "source_main_hash_hex": "2000665a8c1c4115576683e64c12376a7b4d5cc3dcfe74bdd1ca5516cedfd3a7",
+      "main_hash_sha256": "1c0311f4818b29756adde6da9723e0c768802f9cb1fbe3fc50d882a75cf7de82",
+      "metadata_sha256": "691295602c6875077648add72e00da5d86c5d843625fc052cf6c1b5526e3fa4e",
+      "cache_directory": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/2000665a8c1c4115576683e64c12376a7b4d5cc3dcfe74bdd1ca5516cedfd3a7"
+    },
+    {
+      "package": "/Users/sa4drao/.anemll-forge/builds/m6-192k-ctx128k-1f15333fcf8d/chunk_L52-55.aimodel",
+      "expected_entries": [
+        "v8_8k",
+        "v8_16k",
+        "v8_32k",
+        "v8_64k",
+        "v8_96k",
+        "v8_128k",
+        "p64_8k",
+        "p64_16k",
+        "p64_32k",
+        "p64_64k",
+        "p64_96k",
+        "p32_128k"
+      ],
+      "status": "fully_ane",
+      "specializations": [
+        {
+          "manifest": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/6f610d6bbfa16ce19532387f149f1dd0947c380030241bc389a2a3572cf0b636/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/manifest.plist",
+          "entries": {
+            "v8_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_8k_fVxqXv3qp5yXVOO6vIWYLQ_10"
+              ]
+            },
+            "v8_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_16k_7RzVRYRQY6P3xeGplYokBA_7"
+              ]
+            },
+            "v8_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_32k_aXIRfUGgy8JCPS-Nz2xkEw_8"
+              ]
+            },
+            "v8_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_64k_kkYR-j7FiOKa4E0Z5BLoaA_9"
+              ]
+            },
+            "v8_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_96k_O3XYKIC3GSBtSAMQ2ZGmxQ_11"
+              ]
+            },
+            "v8_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_128k_2lLjtFtfTcVtsELTaXJiZQ_6"
+              ]
+            },
+            "p64_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_8k_18tnAnshnRKjUmZLC2Bn6w_4"
+              ]
+            },
+            "p64_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_16k_3sll1bng8LcdPssqxQCFbg_1"
+              ]
+            },
+            "p64_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_32k_ByIJ6L9YOY5CaHKNbOM7-Q_2"
+              ]
+            },
+            "p64_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_64k_O5D4NJzSg7ZatD3ADEcfqA_3"
+              ]
+            },
+            "p64_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_96k_O2HB-RCXYYL5Klpus23bIA_5"
+              ]
+            },
+            "p32_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p32_128k__o0O2e_x-9KP-tIFgQ6Rfg_0"
+              ]
+            }
+          },
+          "graphs": [
+            {
+              "file": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/6f610d6bbfa16ce19532387f149f1dd0947c380030241bc389a2a3572cf0b636/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/specialized_model_0.mpsgraph",
+              "bytes": 4117499,
+              "sha256": "a6f8247aa054e0eb1ec897164fa27b544593eb963a7ef70cbc876a9fc12598b4",
+              "gpu_region_name_count": 0,
+              "ane_region_name_count": 12
+            }
+          ],
+          "status": "fully_ane",
+          "compile_modes": [
+            2
+          ]
+        }
+      ],
+      "source_main_hash_hex": "6f610d6bbfa16ce19532387f149f1dd0947c380030241bc389a2a3572cf0b636",
+      "main_hash_sha256": "78f211580adba344991a182322ce66cdc39fa66d8e426f3c248a850de29637c0",
+      "metadata_sha256": "3aa85a3bf0192ddd227dfc31051e7a376f410cdfc647d2489b320dc0fc30ccdd",
+      "cache_directory": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/6f610d6bbfa16ce19532387f149f1dd0947c380030241bc389a2a3572cf0b636"
+    },
+    {
+      "package": "/Users/sa4drao/.anemll-forge/builds/m6-192k-ctx128k-1f15333fcf8d/chunk_L56-59.aimodel",
+      "expected_entries": [
+        "v8_8k",
+        "v8_16k",
+        "v8_32k",
+        "v8_64k",
+        "v8_96k",
+        "v8_128k",
+        "p64_8k",
+        "p64_16k",
+        "p64_32k",
+        "p64_64k",
+        "p64_96k",
+        "p32_128k"
+      ],
+      "status": "fully_ane",
+      "specializations": [
+        {
+          "manifest": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/44f2209d7e37fa8aab138014b3e5a777bd96ba7d23a54c3c71a714a063e61132/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/manifest.plist",
+          "entries": {
+            "v8_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_8k_fVxqXv3qp5yXVOO6vIWYLQ_10"
+              ]
+            },
+            "v8_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_16k_7RzVRYRQY6P3xeGplYokBA_7"
+              ]
+            },
+            "v8_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_32k_aXIRfUGgy8JCPS-Nz2xkEw_8"
+              ]
+            },
+            "v8_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_64k_kkYR-j7FiOKa4E0Z5BLoaA_9"
+              ]
+            },
+            "v8_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_96k_O3XYKIC3GSBtSAMQ2ZGmxQ_11"
+              ]
+            },
+            "v8_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_128k_2lLjtFtfTcVtsELTaXJiZQ_6"
+              ]
+            },
+            "p64_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_8k_18tnAnshnRKjUmZLC2Bn6w_4"
+              ]
+            },
+            "p64_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_16k_3sll1bng8LcdPssqxQCFbg_1"
+              ]
+            },
+            "p64_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_32k_ByIJ6L9YOY5CaHKNbOM7-Q_2"
+              ]
+            },
+            "p64_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_64k_O5D4NJzSg7ZatD3ADEcfqA_3"
+              ]
+            },
+            "p64_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_96k_O2HB-RCXYYL5Klpus23bIA_5"
+              ]
+            },
+            "p32_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p32_128k__o0O2e_x-9KP-tIFgQ6Rfg_0"
+              ]
+            }
+          },
+          "graphs": [
+            {
+              "file": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/44f2209d7e37fa8aab138014b3e5a777bd96ba7d23a54c3c71a714a063e61132/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/specialized_model_0.mpsgraph",
+              "bytes": 4117488,
+              "sha256": "2cebf1048812cf8488b3ceed93cf52e1516f9f8d837cc3d29fda428eea18f817",
+              "gpu_region_name_count": 0,
+              "ane_region_name_count": 12
+            }
+          ],
+          "status": "fully_ane",
+          "compile_modes": [
+            2
+          ]
+        }
+      ],
+      "source_main_hash_hex": "44f2209d7e37fa8aab138014b3e5a777bd96ba7d23a54c3c71a714a063e61132",
+      "main_hash_sha256": "b24c11b948f73a25ebef6f98df8ce0c1c2aca6b927c45c409fae589b0263dbc8",
+      "metadata_sha256": "374b25b82df338e16eedb4bff8a6f807893ba444baf3d2c7bdbedf1cfa88ce85",
+      "cache_directory": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/44f2209d7e37fa8aab138014b3e5a777bd96ba7d23a54c3c71a714a063e61132"
+    },
+    {
+      "package": "/Users/sa4drao/.anemll-forge/builds/m6-192k-ctx128k-1f15333fcf8d/chunk_L60-63.aimodel",
+      "expected_entries": [
+        "v8_8k",
+        "v8_16k",
+        "v8_32k",
+        "v8_64k",
+        "v8_96k",
+        "v8_128k",
+        "p64_8k",
+        "p64_16k",
+        "p64_32k",
+        "p64_64k",
+        "p64_96k",
+        "p32_128k"
+      ],
+      "status": "fully_ane",
+      "specializations": [
+        {
+          "manifest": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/71e00afb420572bd6b00d793f5bcf00c014a2ef836600053e4f39c47f14a8c95/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/manifest.plist",
+          "entries": {
+            "v8_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_8k_fVxqXv3qp5yXVOO6vIWYLQ_10"
+              ]
+            },
+            "v8_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_16k_7RzVRYRQY6P3xeGplYokBA_7"
+              ]
+            },
+            "v8_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_32k_aXIRfUGgy8JCPS-Nz2xkEw_8"
+              ]
+            },
+            "v8_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_64k_kkYR-j7FiOKa4E0Z5BLoaA_9"
+              ]
+            },
+            "v8_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_96k_O3XYKIC3GSBtSAMQ2ZGmxQ_11"
+              ]
+            },
+            "v8_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "v8_128k_2lLjtFtfTcVtsELTaXJiZQ_6"
+              ]
+            },
+            "p64_8k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_8k_18tnAnshnRKjUmZLC2Bn6w_4"
+              ]
+            },
+            "p64_16k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_16k_3sll1bng8LcdPssqxQCFbg_1"
+              ]
+            },
+            "p64_32k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_32k_ByIJ6L9YOY5CaHKNbOM7-Q_2"
+              ]
+            },
+            "p64_64k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_64k_O5D4NJzSg7ZatD3ADEcfqA_3"
+              ]
+            },
+            "p64_96k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p64_96k_O2HB-RCXYYL5Klpus23bIA_5"
+              ]
+            },
+            "p32_128k": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "p32_128k__o0O2e_x-9KP-tIFgQ6Rfg_0"
+              ]
+            }
+          },
+          "graphs": [
+            {
+              "file": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/71e00afb420572bd6b00d793f5bcf00c014a2ef836600053e4f39c47f14a8c95/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/specialized_model_0.mpsgraph",
+              "bytes": 4118456,
+              "sha256": "13dafc54f367fdfee0c54f8b2756a13025b3b6c9478781f6b30e6906af3eb3dc",
+              "gpu_region_name_count": 0,
+              "ane_region_name_count": 12
+            }
+          ],
+          "status": "fully_ane",
+          "compile_modes": [
+            2
+          ]
+        }
+      ],
+      "source_main_hash_hex": "71e00afb420572bd6b00d793f5bcf00c014a2ef836600053e4f39c47f14a8c95",
+      "main_hash_sha256": "773e19a0adf1a746afeba1bb3df351c41d03db63c9ea4ab3ffc4bda02bb6d525",
+      "metadata_sha256": "4faeaba3d876b4f50bca4fea8173b6eb41eeb656c4c500d44d0ae37bb11f95af",
+      "cache_directory": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/71e00afb420572bd6b00d793f5bcf00c014a2ef836600053e4f39c47f14a8c95"
+    },
+    {
+      "package": "/Users/sa4drao/.anemll-forge/builds/m6-192k-ctx128k-1f15333fcf8d/head_T8.aimodel",
+      "expected_entries": [
+        "h8"
+      ],
+      "status": "fully_ane",
+      "specializations": [
+        {
+          "manifest": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/21a28f39a41e64cdbb29729b103050226ecf3a996055482c753139f45daee030/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/manifest.plist",
+          "entries": {
+            "h8": {
+              "status": "fully_ane",
+              "matching_symbols": [
+                "h8_vank5pWEg0fIYKifepJXNA_0"
+              ]
+            }
+          },
+          "graphs": [
+            {
+              "file": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/21a28f39a41e64cdbb29729b103050226ecf3a996055482c753139f45daee030/6C51FA6919A4F15EAE6B61542CD93C721749E1FF8027D62A8EFB22E6C74D4BC0/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/specialized_model_0.mpsgraph",
+              "bytes": 9855,
+              "sha256": "96541a16e431fe83e8d8007a4de742c04bdf5ea8333497fcabcb2b0a2efaee72",
+              "gpu_region_name_count": 0,
+              "ane_region_name_count": 1
+            }
+          ],
+          "status": "fully_ane",
+          "compile_modes": [
+            2
+          ]
+        }
+      ],
+      "source_main_hash_hex": "21a28f39a41e64cdbb29729b103050226ecf3a996055482c753139f45daee030",
+      "main_hash_sha256": "7a9e7ba49a3ffd096817d0291f4fd91aa0b59ff25e5ac0a37efd4118e18185ea",
+      "metadata_sha256": "6120b9adb832a29ad277e8c5ec5708f7629e8be1afc9f529286d13f7d79b4b17",
+      "cache_directory": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/21a28f39a41e64cdbb29729b103050226ecf3a996055482c753139f45daee030"
+    },
+    {
+      "package": "/Users/sa4drao/Models/anemll-forge-qwen3.8-27B-192K/drafter/all3/dflash2_lut4_gptq_nohead.aimodel",
+      "expected_entries": [
+        "draft",
+        "ctx64"
+      ],
+      "status": "gpu_regions_present",
+      "specializations": [
+        {
+          "manifest": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/e6131347139bfc331578eea59e8b700c238d17a4fd1e69db83ba8ec7b8425a47/1437135650F5EB80B3545D58225DFBDAB1D3F672814A14BDB8BE67FA0A9BB0E1/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/manifest.plist",
+          "entries": {
+            "draft": {
+              "status": "unknown",
+              "matching_symbols": [
+                "draft_niLciBP5Qoinxr0huIdQCQ_1"
+              ]
+            },
+            "ctx64": {
+              "status": "unknown",
+              "matching_symbols": [
+                "ctx64_nuAcn1wfM3Qe8PqmbGjdrw_0"
+              ]
+            }
+          },
+          "graphs": [
+            {
+              "file": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/e6131347139bfc331578eea59e8b700c238d17a4fd1e69db83ba8ec7b8425a47/1437135650F5EB80B3545D58225DFBDAB1D3F672814A14BDB8BE67FA0A9BB0E1/model.aimodelx/main-this-delegates/MPSGraph/mpsExecutable.mpsgraphpackage/specialized_model_0.mpsgraph",
+              "bytes": 287709,
+              "sha256": "b1fbb0fc604a99dc29e1c27dbe0637ddc3a760f13f40af327086bbded380f9bb",
+              "gpu_region_name_count": 4,
+              "ane_region_name_count": 0
+            }
+          ],
+          "status": "gpu_regions_present",
+          "compile_modes": [
+            2
+          ]
+        }
+      ],
+      "source_main_hash_hex": "e6131347139bfc331578eea59e8b700c238d17a4fd1e69db83ba8ec7b8425a47",
+      "main_hash_sha256": "7284b3cf1ef40529ee51a169c5872b8c36e8048b0fc2754722e12fe0516725aa",
+      "metadata_sha256": "817417f682c5cc08a905097cacb60b6052adc80bcced5c3997a1965c9d3e92b8",
+      "cache_directory": "/Users/sa4drao/Library/Caches/coreai-cache/26B123/python/e6131347139bfc331578eea59e8b700c238d17a4fd1e69db83ba8ec7b8425a47"
+    }
+  ]
+}
