@@ -153,8 +153,8 @@ The server keeps two in-memory snapshots per prompt, so a follow-up skips the pr
 What an entry holds: the KV rows for the whole prompt (about 33 KB per token with the int8 cache), the DeltaNet states (101 MB), the drafter ring (42 MB) and the token ids. Entries are tagged with the build (a hash of its `manifest.json`), KV format, key layout, drafter (a hash of its `main.hash`) and context size. Entries with another tag are ignored and left on disk, outside the size cap; delete the folder after changing builds. They contain the conversation, so use a folder only you can read. There is no per-client switch: every client of the server is covered.
 
 Behaviour to know:
-- A save happens inside the request that crosses the threshold and takes about 0.2 to 1.5 s (0.4 to 4.3 GB).
-- A restore reads at the SSD's speed (2.6 GB/s on an M6 Mac mini's internal drive): 1 to 2 s at 64K to 126K tokens, against 5 to 13 minutes of prefill. An external USB drive is far slower.
+- A save happens inside the request that crosses the threshold and takes about 0.06 to 1.6 s (0.4 to 4.3 GB, 8K to 126K tokens).
+- A restore reads at the SSD's speed (2.4 to 2.7 GB/s on an M6 Mac mini's internal drive): 0.9 s at 64K and 1.8 s at 126K tokens, against 5 and 13 minutes of prefill. The first token then comes 1.1 s (64K) to 2.6 s (126K) later than after an in-memory restore. An external USB drive is far slower.
 - A failed save or load is logged and the request is prefilled normally. A damaged entry is removed. Unfinished saves (`*.tmp`) are removed at startup.
 - A restore discards the in-memory snapshots of other prompts, because it overwrites the live KV rows.
 
