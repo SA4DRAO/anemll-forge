@@ -440,7 +440,8 @@ class Engine:
             try:
                 snap = self.disk.load(self, entry)
                 self._restore(snap)
-                self.snaps["turn"] = snap
+                # the load overwrote the live KV rows: an in-memory snapshot of another prompt would restore onto them
+                self.snaps = {"turn": snap}
                 reused, how = len(self.fed), "restore from disk"
             except Exception as ex:  # a bad entry costs a cold prefill, not the request
                 log(f"[disk] load failed ({ex!r}); prefilling")

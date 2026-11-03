@@ -7,15 +7,15 @@ into a fresh process instead of prefilling again:
   kv.bin        KV rows [0, pos) of every attention layer (about 33 KB per token)
   deltanet.bin  the snapshot's DeltaNet / conv states (fixed size)
   ring.bin      the drafter's K / V ring
-  draft.pkl     drafter slot positions and queued feature rows
+  draft.npz     drafter slot positions and queued feature rows
   ids.npy       the prompt's token ids (an entry serves a prompt that starts with them)
 
 Off unless PROMPT_DISK_DIR is set: the files hold the conversation (token ids and its KV rows). Reads use F_NOCACHE,
 so a restore does not fill the page cache with a conversation's KV."""
 import fcntl
+import hashlib
 import json
 import os
-import pickle
 import shutil
 import threading
 import time
@@ -31,9 +31,9 @@ def _write(path, arrays):
     n = 0
     with open(path, "wb") as f:
         for a in arrays:
-            b = np.ascontiguousarray(a).tobytes()
-            f.write(b)
-            n += len(b)
+            a = np.ascontiguousarray(a)
+            f.write(memoryview(a).cast("B"))
+            n += a.nbytes
         f.flush()
         os.fsync(f.fileno())
     return n
@@ -61,18 +61,23 @@ class PromptDiskCache:
     def __init__(self, root, budget_gb, fingerprint, min_gain=2048, save_gap=8192, log=print):
         self.root, self.budget = Path(root).expanduser(), int(budget_gb * 1e9)
         self.fp, self.min_gain, self.save_gap, self.log = fingerprint, min_gain, save_gap, log
+        new = not self.root.exists()
         self.root.mkdir(parents=True, exist_ok=True)
-        os.chmod(self.root, 0o700)
+        if new:
+            os.chmod(self.root, 0o700)   # a folder we made holds conversations; one the user chose keeps its mode
         self.lock = threading.Lock()
         self.entries = {}   # name -> {"ids": int32 array, "bytes": int, "used": float}
         for d in sorted(self.root.iterdir()):
+            if d.suffix == ".tmp":   # a save that never finished (crash, disk full)
+                shutil.rmtree(d, ignore_errors=True)
+                continue
             try:
                 meta = json.loads((d / "meta.json").read_text())
                 if meta["fp"] != self.fp or meta["format"] != FORMAT:
                     continue
                 self.entries[d.name] = {"ids": np.load(d / "ids.npy"), "bytes": meta["bytes"],
                                         "used": (d / "meta.json").stat().st_mtime}
-            except Exception:   # unfinished or foreign entry: ignored here, removed when the budget needs room
+            except Exception:   # foreign or unreadable entry: ignored (and left alone)
                 continue
         log(f"[disk] prompt cache {self.root}: {len(self.entries)} entries, {self.total() / 1e9:.1f} of "
             f"{budget_gb:g} GB")
@@ -131,11 +136,14 @@ class PromptDiskCache:
                 "states": states}
         if dr is not None:
             n += _read_into(d / "ring.bin", self._ring(dr))
-            slot_pos, pending = pickle.loads((d / "draft.pkl").read_bytes())
+            with np.load(d / "draft.npz") as z:
+                slot_pos = z["slot_pos"]
+                pending = list(zip(z["pend_rows"], z["pend_pos"].tolist()))
             dr.slot_pos = slot_pos.copy()       # the ring on disk is as it was at the cut: every slot is valid
             snap["draft"] = (slot_pos, pending)
         os.utime(d / "meta.json")
-        self.entries[name]["used"] = time.time()
+        with self.lock:
+            self.entries[name]["used"] = time.time()
         self.log(f"[disk] loaded {pos} tok ({n / 1e9:.2f} GB) in {time.perf_counter() - t0:.2f}s")
         return snap
 
@@ -151,11 +159,13 @@ class PromptDiskCache:
             self._save(eng, ids, snap)
         except Exception as ex:   # the disk tier never fails a request
             self.log(f"[disk] save failed: {ex!r}")
+            for t in self.root.glob("*.tmp"):
+                shutil.rmtree(t, ignore_errors=True)
 
     def _save(self, eng, ids, snap):
         t0 = time.perf_counter()
         m, dr, pos = eng.model, eng.drafter, snap["pos"]
-        name = f"{int(time.time())}-{len(ids)}-{abs(hash(ids.tobytes())) % 10**8:08d}"
+        name = f"{int(time.time())}-{len(ids)}-{hashlib.sha1(ids.tobytes()).hexdigest()[:8]}"
         tmp = self.root / (name + ".tmp")
         shutil.rmtree(tmp, ignore_errors=True)
         tmp.mkdir()
@@ -164,7 +174,10 @@ class PromptDiskCache:
         n += _write(tmp / "deltanet.bin", [st[k] for st in snap["states"] for k in sorted(st)])
         if dr is not None:
             n += _write(tmp / "ring.bin", self._ring(dr))
-            (tmp / "draft.pkl").write_bytes(pickle.dumps(snap["draft"]))
+            slot_pos, pending = snap["draft"]
+            rows = np.stack([r for r, _ in pending]) if pending else np.zeros((0, 0), np.float16)
+            np.savez(tmp / "draft.npz", slot_pos=slot_pos, pend_rows=rows,
+                     pend_pos=np.array([p for _, p in pending], np.int64))
         np.save(tmp / "ids.npy", ids)
         (tmp / "meta.json").write_text(json.dumps({"format": FORMAT, "fp": self.fp, "pos": pos,
                                                    "pending": snap["pending"], "bytes": n}))

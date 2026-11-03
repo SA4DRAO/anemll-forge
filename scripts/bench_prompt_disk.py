@@ -53,7 +53,7 @@ def run(e, ids):
     t, first = time.perf_counter(), []
     text, finish, n, reused, dt = e.generate(ids, GEN, 0.0, 1.0, 0, [], None,
                                              lambda s: first.append(time.perf_counter() - t) if not first else None,
-                                             0.0, None, 0, 0.0, None)
+                                             presence=0.0, dry=None, think_budget=0, min_p=0.0)
     e.prefill = orig
     return {"text": text, "n": n, "reused": reused, "total_s": time.perf_counter() - t,
             "prefill_s": box["prefill_s"], "first_text_s": first[0] if first else None}, box["logits"]
