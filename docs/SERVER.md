@@ -138,3 +138,24 @@ These are measured mitigations and research switches, not settings most users ne
 | `COREAI_DRAFTER_COMPUTE` | `ane` (set by the launcher) | Drafter compute device |
 | `MPSGRAPH_ANE_BONDED_COMPILE_MODE` | set by SoC policy (`1` on the M5 family, H17; `2` on M6+, H18) | ANE compile mode; an explicit value overrides the policy. Compiled packages are cached per mode. See [ANE compile mode policy](ANE_COMPILE_MODE_POLICY.md) |
 | `ANE_COMPILE_HEARTBEAT_S` | `30` | Seconds between `[ANE compile]` progress lines during a long compile |
+
+## Prompt disk tier (optional)
+
+The server keeps two in-memory snapshots per prompt, so a follow-up skips the prefill of everything before the last turn. They are lost on a restart, and a second conversation overwrites the live KV rows. With `PROMPT_DISK_DIR` set, the turn snapshot is also written to disk, with the KV rows, and read back when a later prompt starts with the same tokens. Off unless the variable is set. Only the batched-prefill model path is covered.
+
+| Variable | Default | Effect |
+| --- | --- | --- |
+| `PROMPT_DISK_DIR` | unset (off) | Folder for the saved prompts. Created with mode 700 if it does not exist; an existing folder keeps its mode |
+| `PROMPT_DISK_GB` | `16` | Size cap; the least recently used entries are removed first |
+| `PROMPT_DISK_MIN_GAIN` | `2048` | A saved prompt is used only if it covers at least this many tokens more than memory already offers |
+| `PROMPT_DISK_SAVE_GAP` | `8192` | A turn is saved only if it has at least this many tokens beyond what disk already holds for it |
+
+What an entry holds: the KV rows for the whole prompt (about 33 KB per token with the int8 cache), the DeltaNet states (101 MB), the drafter ring (42 MB) and the token ids. Entries are tagged with the build, KV format, key layout, drafter and context size, and entries with another tag are ignored. They contain the conversation, so use a folder only you can read. There is no per-client switch: every client of the server is covered.
+
+Behaviour to know:
+- A save happens inside the request that crosses the threshold and takes about 0.2 to 1.5 s (0.4 to 4.3 GB).
+- A restore reads at the SSD's speed (2.6 GB/s on an M6 Mac mini's internal drive): 1 to 2 s at 64K to 126K tokens, against 5 to 13 minutes of prefill. An external USB drive is far slower.
+- A failed save or load is logged and the request is prefilled normally. A damaged entry is removed. Unfinished saves (`*.tmp`) are removed at startup.
+- A restore discards the in-memory snapshots of other prompts, because it overwrites the live KV rows.
+
+`scripts/bench_prompt_disk.py` measures save and restore at a chosen size (`cold N DIR`, then `warm N DIR` in a new process). `scripts/check_prompt_disk.py` runs the edge cases on the real model: alternating conversations, stale snapshots, a truncated entry, a save that fails and the size cap.

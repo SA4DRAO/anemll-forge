@@ -22,16 +22,18 @@ sys.path.insert(0, str(REPO / "scripts"))
 GEN = 64
 
 
-def prompts(e, n):
+def prompts(e, n, tag="", skip=0):
+    """tag changes the system prompt, skip rotates the document: two tags give two unrelated conversations."""
     tok = lambda s: e.tok.encode(s, add_special_tokens=False)  # noqa: E731
     files = [REPO / "README.md"] + sorted(Path(p) for p in glob.glob(str(REPO / "docs/**/*.md"), recursive=True))
     base = tok("\n\n".join(f.read_text(errors="replace") for f in files))
+    base = base[skip:] + base[:skip]
     body, k = [], 0
     while len(body) < n:   # tile the repo docs, each copy introduced by its own heading, up to n tokens
         body += tok(f"\n\n## Part {k}\n\n") + [t for t in base if t != e.im_start]
         k += 1
     body = body[:n]
-    head = tok("<|im_start|>system\nYou are a careful assistant.<|im_end|>\n<|im_start|>user\n")
+    head = tok(f"<|im_start|>system\nYou are a careful assistant{tag}.<|im_end|>\n<|im_start|>user\n")
     ask = tok("\nSummarize the above in one sentence.<|im_end|>\n<|im_start|>assistant\n")
     first = head + body + ask
     cut = max(i for i, t in enumerate(first) if t == e.im_start)   # the assistant header: the turn snapshot's cut

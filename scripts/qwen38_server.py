@@ -10,6 +10,9 @@ One model, one request at a time. Prompt cache: the Core ML states continue from
 new prompt extends it; the Gated DeltaNet states are also snapshotted at the end of every prompt, so a follow-up
 that re-renders the last answer differently still reuses everything up to that prompt (KV rows past the
 position are masked, so only the DeltaNet recurrent / conv states need the snapshot).
+PROMPT_DISK_DIR=<dir> adds a disk tier under those snapshots (prompt_disk_cache.py; PROMPT_DISK_GB, PROMPT_DISK_MIN_GAIN,
+PROMPT_DISK_SAVE_GAP; docs/SERVER.md): the prompt state is also written at each turn cut, so a restart or another
+conversation restores a long prompt from disk in seconds instead of prefilling it again. Off by default.
 
     python qwen38_server.py --hf /path/to/bundle/model --model-dir /path/to/bundle/coreai --ctx 8192
 """
