@@ -11,7 +11,7 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from prompt_disk_cache import PromptDiskCache, file_digest  # noqa: E402
+from prompt_disk_cache import PromptDiskCache, build_digest, file_digest  # noqa: E402
 
 FP = {"build": "b", "kv": "int8", "keys_t": True, "drafter": "d", "ctx": 64}
 QUIET = lambda *a, **k: None  # noqa: E731
@@ -181,6 +181,36 @@ class PromptDiskCacheTest(unittest.TestCase):
         self.assertNotEqual(file_digest(a / "manifest.json"), file_digest(b / "manifest.json"))
         (b / "manifest.json").write_text("one")
         self.assertEqual(file_digest(a / "manifest.json"), file_digest(b / "manifest.json"))
+
+    def test_build_digest_follows_compiled_hashes(self):
+        d = Path(self.tmp.name) / "build"
+        (d / "chunk_L00-03.aimodel").mkdir(parents=True)
+        (d / "manifest.json").write_text('{"export": "same name"}')
+        (d / "chunk_L00-03.aimodel" / "main.hash").write_bytes(b"\x01" * 32)
+        one = build_digest(d)
+        (d / "chunk_L00-03.aimodel" / "main.hash").write_bytes(b"\x02" * 32)   # other weights, same manifest
+        self.assertNotEqual(one, build_digest(d))
+
+    def test_an_entry_over_the_budget_is_not_saved_and_evicts_nothing(self):
+        eng = Eng()
+        c = self.cache()
+        c.maybe_save(eng, np.arange(40, dtype=np.int32), eng.fill(1, 40))
+        size = next(iter(c.entries.values()))["bytes"]
+        small = self.cache(gb=size * 0.5 / 1e9)
+        small.maybe_save(eng, np.arange(1000, 1040, dtype=np.int32), eng.fill(2, 40))
+        self.assertEqual(len(small.entries), 1)                 # the old entry is still there
+        self.assertEqual(next(iter(small.entries.values()))["ids"].tolist(), list(range(40)))
+
+    def test_unreadable_own_entries_are_removed_foreign_folders_kept(self):
+        self.root.mkdir()
+        broken = self.root / "1793679266-40-0123abcd"
+        broken.mkdir()
+        (broken / "meta.json").write_text("{trunc")
+        foreign = self.root / "notes"
+        foreign.mkdir()
+        self.cache()
+        self.assertFalse(broken.exists())
+        self.assertTrue(foreign.exists())
 
     def test_an_existing_folder_keeps_its_mode(self):
         self.root.mkdir(mode=0o755)

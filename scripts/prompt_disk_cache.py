@@ -16,6 +16,8 @@ import fcntl
 import hashlib
 import json
 import os
+import re
+import sys
 import shutil
 import threading
 import time
@@ -23,17 +25,58 @@ from pathlib import Path
 
 import numpy as np
 
-F_NOCACHE = 48
+F_NOCACHE, F_FULLFSYNC = 48, 51   # macOS fcntl commands
+DARWIN = sys.platform == "darwin"
 FORMAT = 1
+ENTRY = re.compile(r"^\d+-\d+-[0-9a-f]{8}$")   # folder names this cache writes
 
 
-def file_digest(path):
-    """Identity of a build or drafter for the entry fingerprint: the file's SHA-256 (its name if it is missing)."""
-    path = Path(path)
+def file_digest(*paths, head=None):
+    """SHA-256 of the files (with `head`, of each file's size and first `head` bytes), for the entry fingerprint."""
+    h = hashlib.sha256()
+    for p in paths:
+        p = Path(p)
+        h.update(p.name.encode())
+        try:
+            with open(p, "rb") as f:
+                if head:
+                    h.update(str(os.fstat(f.fileno()).st_size).encode())
+                h.update(f.read(head) if head else f.read())
+        except OSError:
+            h.update(b"missing")
+    return h.hexdigest()[:16]
+
+
+def build_digest(d):
+    """A compiled build or drafter package: its manifest and every package's main.hash (the compiled program's
+    content hash, so it changes with the weights; manifest names alone do not)."""
+    d = Path(d)
+    files = ([d / "manifest.json"] if (d / "manifest.json").exists() else []) + sorted(d.glob("**/main.hash"))
+    return file_digest(*files) if files else file_digest(d)
+
+
+def _sync(f):
+    f.flush()
+    os.fsync(f.fileno())
+    if DARWIN:   # fsync on macOS does not flush the drive's cache
+        try:
+            fcntl.fcntl(f.fileno(), F_FULLFSYNC)
+        except OSError:
+            pass
+
+
+def _sync_dir(path):
+    fd = os.open(path, os.O_RDONLY)
     try:
-        return hashlib.sha256(path.read_bytes()).hexdigest()[:16]
-    except OSError:
-        return path.parent.name
+        os.fsync(fd)
+    finally:
+        os.close(fd)
+
+
+def _write_bytes(path, data):
+    with open(path, "wb") as f:
+        f.write(data)
+        _sync(f)
 
 
 def _write(path, arrays):
@@ -43,8 +86,7 @@ def _write(path, arrays):
             a = np.ascontiguousarray(a)
             f.write(memoryview(a).cast("B"))
             n += a.nbytes
-        f.flush()
-        os.fsync(f.fileno())
+        _sync(f)
     return n
 
 
@@ -52,7 +94,8 @@ def _read_into(path, arrays):
     """Direct reads into the arrays (live IOSurface buffers for KV and ring)."""
     n = 0
     with open(path, "rb", buffering=0) as f:
-        fcntl.fcntl(f.fileno(), F_NOCACHE, 1)
+        if DARWIN:
+            fcntl.fcntl(f.fileno(), F_NOCACHE, 1)
         for a in arrays:
             b = bytearray(a.nbytes)
             mv, got = memoryview(b), 0
@@ -83,10 +126,12 @@ class PromptDiskCache:
             try:
                 meta = json.loads((d / "meta.json").read_text())
                 if meta["fp"] != self.fp or meta["format"] != FORMAT:
-                    continue
+                    continue   # another build's entry: left alone
                 self.entries[d.name] = {"ids": np.load(d / "ids.npy"), "bytes": meta["bytes"],
                                         "used": (d / "meta.json").stat().st_mtime}
-            except Exception:   # foreign or unreadable entry: ignored (and left alone)
+            except Exception:   # unreadable: removed if this cache wrote it, otherwise left alone
+                if ENTRY.match(d.name):
+                    shutil.rmtree(d, ignore_errors=True)
                 continue
         log(f"[disk] prompt cache {self.root}: {len(self.entries)} entries, {self.total() / 1e9:.1f} of "
             f"{budget_gb:g} GB")
@@ -164,6 +209,12 @@ class PromptDiskCache:
                     if len(e["ids"]) <= len(ids) and np.array_equal(ids[:len(e["ids"])], e["ids"])), default=0)
         if len(ids) - have < self.save_gap:
             return
+        size = sum(a.nbytes for a in self._kv(eng.model, snap["pos"])) + \
+            sum(v.nbytes for st in snap["states"] for v in st.values()) + \
+            (sum(a.nbytes for a in self._ring(eng.drafter)) if eng.drafter is not None else 0)
+        if size > self.budget:   # it would evict everything and still not fit
+            self.log(f"[disk] not saved: {size / 1e9:.2f} GB is over PROMPT_DISK_GB")
+            return
         try:
             self._save(eng, ids, snap)
         except Exception as ex:   # the disk tier never fails a request
@@ -185,12 +236,17 @@ class PromptDiskCache:
             n += _write(tmp / "ring.bin", self._ring(dr))
             slot_pos, pending = snap["draft"]
             rows = np.stack([r for r, _ in pending]) if pending else np.zeros((0, 0), np.float16)
-            np.savez(tmp / "draft.npz", slot_pos=slot_pos, pend_rows=rows,
-                     pend_pos=np.array([p for _, p in pending], np.int64))
-        np.save(tmp / "ids.npy", ids)
-        (tmp / "meta.json").write_text(json.dumps({"format": FORMAT, "fp": self.fp, "pos": pos,
-                                                   "pending": snap["pending"], "bytes": n}))
+            with open(tmp / "draft.npz", "wb") as f:
+                np.savez(f, slot_pos=slot_pos, pend_rows=rows, pend_pos=np.array([p for _, p in pending], np.int64))
+                _sync(f)
+        with open(tmp / "ids.npy", "wb") as f:
+            np.save(f, ids)
+            _sync(f)
+        _write_bytes(tmp / "meta.json", json.dumps({"format": FORMAT, "fp": self.fp, "pos": pos,
+                                                    "pending": snap["pending"], "bytes": n}).encode())
+        _sync_dir(tmp)
         os.rename(tmp, self.root / name)
+        _sync_dir(self.root)
         with self.lock:
             self.entries[name] = {"ids": ids, "bytes": n, "used": time.time()}
             for old in [k for k, e in self.entries.items() if k != name and len(e["ids"]) < len(ids)

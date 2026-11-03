@@ -7,6 +7,8 @@
                 the load wrote gives wrong output (the check also reproduces that with the old behaviour)
   corrupt       a truncated kv.bin: the load fails, the request is prefilled cold and succeeds, the entry is dropped
   save_failure  a cache folder that cannot be written: the request succeeds, no partial folder is left
+  no_system     a conversation without a system message must not leave another conversation's "system" snapshot in
+                memory (it would restore onto the rows the cold prefill wrote)
   budget        entries beyond PROMPT_DISK_GB are evicted, least recently used first
 
 Prints one PASS / FAIL line per check and exits 1 on any failure."""
@@ -77,6 +79,23 @@ def main():
           f"reused {bad['reused']}")
     check("stale_system: and its output differs from the cold prefill", bad["text"] != cold["text"])
     e.snaps = {}
+
+    # ---- a conversation without a system message (thinking off and no client system prompt) ----
+    X1, X2, _ = prompts(e, n, " X", 100000)
+    full = prompts(e, n, " Y", 140000)[0]
+    h = e.user_hdr
+    Y1 = full[next(i for i in range(len(full)) if full[i:i + len(h)] == h):]   # the same prompt minus its system block
+    run(e, X1)
+    run(e, Y1)
+    check("no_system: a cold prefill drops the other conversation's snapshots", "system" not in e.snaps,
+          str(sorted(e.snaps)))
+    lookup, e.disk.lookup = e.disk.lookup, lambda *a, **k: None
+    res, _ = run(e, X2)                                # memory only: nothing valid is left, so cold
+    e.disk.lookup = lookup
+    check("no_system: without disk, X's follow-up is prefilled cold", res["reused"] == 0, f"reused {res['reused']}")
+    run(e, Y1)
+    res, _ = run(e, X2)
+    check("no_system: with disk, X's follow-up is restored from disk", res["reused"] > n, f"reused {res['reused']}")
 
     # ---- a corrupt entry ----
     run(e, B1)                                         # so memory does not offer A

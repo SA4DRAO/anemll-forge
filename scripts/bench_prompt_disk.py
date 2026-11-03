@@ -64,6 +64,8 @@ def run(e, ids):
 def main():
     mode, n, out = sys.argv[1], int(sys.argv[2]), Path(sys.argv[3])
     flags = sys.argv[sys.argv.index("--") + 1:]
+    if mode == "cold" and (out / "cache").exists() and any((out / "cache").iterdir()):
+        sys.exit(f"{out / 'cache'} already holds entries: a cold run there would restore instead of prefilling")
     os.environ["PROMPT_DISK_DIR"] = str(out / "cache")
     import qwen38_server as S
     t = time.perf_counter()

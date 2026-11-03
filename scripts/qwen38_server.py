@@ -338,12 +338,13 @@ class Engine:
         if os.environ.get("PROMPT_DISK_DIR") and not self.v2:
             log("[disk] PROMPT_DISK_DIR ignored: the disk tier needs the batched-prefill model")
         elif os.environ.get("PROMPT_DISK_DIR"):
-            from prompt_disk_cache import PromptDiskCache, file_digest
+            from prompt_disk_cache import PromptDiskCache, build_digest, file_digest
             self.disk = PromptDiskCache(
                 os.environ["PROMPT_DISK_DIR"], float(os.environ.get("PROMPT_DISK_GB", "16")),
-                {"build": file_digest(mdir / "manifest.json"), "kv": str(getattr(self.model, "kv_cache_dtype", "")),
+                {"build": build_digest(mdir), "embed": file_digest(*sorted(hf.glob("embed_tokens*.npy")), head=1 << 20),
+                 "kv": str(getattr(self.model, "kv_cache_dtype", "")),
                  "keys_t": bool(getattr(self.model, "keys_t", False)),
-                 "drafter": file_digest(Path(a.draft) / "main.hash") if a.draft else None, "ctx": a.ctx},
+                 "drafter": build_digest(Path(a.draft)) if a.draft else None, "ctx": a.ctx},
                 min_gain=int(os.environ.get("PROMPT_DISK_MIN_GAIN", "2048")),
                 save_gap=int(os.environ.get("PROMPT_DISK_SAVE_GAP", "8192")), log=log)
         self.user_hdr = self.tok.encode("<|im_start|>user", add_special_tokens=False)
@@ -454,7 +455,7 @@ class Engine:
                 self.model.reset()
                 if self.drafter is not None:
                     self.drafter.reset()
-                self.fed, reused, how = [], 0, "cold (disk entry unusable)"
+                self.fed, self.snaps, reused, how = [], {}, 0, "cold (disk entry unusable)"
         elif n and len(ids) > n and ids[:n] == self.fed and (best is None or n >= len(best["ids"])):
             reused, how = n, "continue (model state is a prefix of the prompt)"
         elif best is not None:
@@ -465,7 +466,9 @@ class Engine:
             self.model.reset()
             if self.drafter is not None:
                 self.drafter.reset()
-            self.fed, reused, how = [], 0, "cold (no reusable state)"
+            # the prefill overwrites the KV rows from 0: a kept snapshot (say "system" of a conversation with a system
+            # message, when this prompt has none and so never replaces it) would later restore onto these rows
+            self.fed, self.snaps, reused, how = [], {}, 0, "cold (no reusable state)"
         log(f"request: prompt {len(ids)} tok | cache: {how}, reused {reused} | prefilling {len(ids) - reused} tok ...")
         t_pre = time.perf_counter()
         turn_cut = max((i for i, t in enumerate(ids) if t == self.im_start), default=0)
