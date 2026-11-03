@@ -10,6 +10,9 @@ One model, one request at a time. Prompt cache: the Core ML states continue from
 new prompt extends it; the Gated DeltaNet states are also snapshotted at the end of every prompt, so a follow-up
 that re-renders the last answer differently still reuses everything up to that prompt (KV rows past the
 position are masked, so only the DeltaNet recurrent / conv states need the snapshot).
+PROMPT_DISK_DIR=<dir> adds a disk tier under those snapshots (prompt_disk_cache.py; PROMPT_DISK_GB, PROMPT_DISK_MIN_GAIN,
+PROMPT_DISK_SAVE_GAP; docs/SERVER.md): the prompt state is also written at each turn cut, so a restart or another
+conversation restores a long prompt from disk in seconds instead of prefilling it again. Off by default.
 
     python qwen38_server.py --hf /path/to/bundle/model --model-dir /path/to/bundle/coreai --ctx 8192
 """
@@ -331,6 +334,19 @@ class Engine:
             self.gdn_states.append([s for j, l in enumerate(range(lo, hi + 1))
                                     if cfg["layer_types"][l] == "linear_attention" for s in (f"conv{j}", f"rec{j}")])
         self.fed, self.snaps = [], {}   # snapshots: "system" (before the first user turn), "turn" (before the last header)
+        self.disk = None   # PROMPT_DISK_DIR: the snapshots also go to disk, so a restart or another conversation restores
+        if os.environ.get("PROMPT_DISK_DIR") and not self.v2:
+            log("[disk] PROMPT_DISK_DIR ignored: the disk tier needs the batched-prefill model")
+        elif os.environ.get("PROMPT_DISK_DIR"):
+            from prompt_disk_cache import PromptDiskCache, build_digest, file_digest
+            self.disk = PromptDiskCache(
+                os.environ["PROMPT_DISK_DIR"], float(os.environ.get("PROMPT_DISK_GB", "16")),
+                {"build": build_digest(mdir), "embed": file_digest(*sorted(hf.glob("embed_tokens*.npy")), head=1 << 20),
+                 "kv": str(getattr(self.model, "kv_cache_dtype", "")),
+                 "keys_t": bool(getattr(self.model, "keys_t", False)),
+                 "drafter": build_digest(Path(a.draft)) if a.draft else None, "ctx": a.ctx},
+                min_gain=int(os.environ.get("PROMPT_DISK_MIN_GAIN", "2048")),
+                save_gap=int(os.environ.get("PROMPT_DISK_SAVE_GAP", "8192")), log=log)
         self.user_hdr = self.tok.encode("<|im_start|>user", add_special_tokens=False)
         self.lock = threading.Lock()
         print(f"[{MODEL_ID}] loaded {'batched prefill' if self.v2 else f'{len(names)} chunks'} + head"
@@ -424,7 +440,23 @@ class Engine:
         best = max((s_ for s_ in self.snaps.values()
                     if len(ids) > len(s_["ids"]) and ids[:len(s_["ids"])] == s_["ids"]),
                    key=lambda s_: len(s_["ids"]), default=None)
-        if n and len(ids) > n and ids[:n] == self.fed and (best is None or n >= len(best["ids"])):
+        in_mem = max(n if n and len(ids) > n and ids[:n] == self.fed else 0, len(best["ids"]) if best else 0)
+        entry = self.disk.lookup(ids, in_mem) if self.disk else None
+        if entry:  # disk holds a longer prefix than memory: read it instead of prefilling it
+            try:
+                snap = self.disk.load(self, entry)
+                self._restore(snap)
+                # the load overwrote the live KV rows: an in-memory snapshot of another prompt would restore onto them
+                self.snaps = {"turn": snap}
+                reused, how = len(self.fed), "restore from disk"
+            except Exception as ex:  # a bad entry costs a cold prefill, not the request
+                log(f"[disk] load failed ({ex!r}); prefilling")
+                self.disk._drop(entry)
+                self.model.reset()
+                if self.drafter is not None:
+                    self.drafter.reset()
+                self.fed, self.snaps, reused, how = [], {}, 0, "cold (disk entry unusable)"
+        elif n and len(ids) > n and ids[:n] == self.fed and (best is None or n >= len(best["ids"])):
             reused, how = n, "continue (model state is a prefix of the prompt)"
         elif best is not None:
             key = next(k for k, v in self.snaps.items() if v is best)
@@ -434,7 +466,9 @@ class Engine:
             self.model.reset()
             if self.drafter is not None:
                 self.drafter.reset()
-            self.fed, reused, how = [], 0, "cold (no reusable state)"
+            # the prefill overwrites the KV rows from 0: a kept snapshot (say "system" of a conversation with a system
+            # message, when this prompt has none and so never replaces it) would later restore onto these rows
+            self.fed, self.snaps, reused, how = [], {}, 0, "cold (no reusable state)"
         log(f"request: prompt {len(ids)} tok | cache: {how}, reused {reused} | prefilling {len(ids) - reused} tok ...")
         t_pre = time.perf_counter()
         turn_cut = max((i for i, t in enumerate(ids) if t == self.im_start), default=0)
@@ -459,6 +493,8 @@ class Engine:
                 progress.update(i)
             if key:
                 self._snapshot(key, ids[:cut])
+                if key == "turn" and self.disk:
+                    self.disk.maybe_save(self, ids[:cut], self.snaps[key])
         dt = time.perf_counter() - t_pre
         self.prefill_stats = {"tokens": len(ids) - reused, "seconds": dt,
                               "tokens_per_second": (len(ids) - reused) / max(dt, 1e-9),
