@@ -141,7 +141,7 @@ These are measured mitigations and research switches, not settings most users ne
 
 ## Prompt disk tier (optional)
 
-The server keeps two in-memory snapshots per prompt, so a follow-up skips the prefill of everything before the last turn. They are lost on a restart, and a second conversation overwrites the live KV rows. With `PROMPT_DISK_DIR` set, the turn snapshot is also written to disk, with the KV rows, and read back when a later prompt starts with the same tokens. Off unless the variable is set. Only the batched-prefill model path is covered.
+The server keeps two in-memory snapshots per prompt, so a follow-up skips the prefill of everything before the last turn. They are lost on a restart, and a second conversation overwrites the live KV rows. With `PROMPT_DISK_DIR` set, the turn snapshot is also written to disk, with the KV rows, and read back when a later prompt starts with the same tokens. Off unless the variable is set. It needs the batched-prefill model (Core AI); with the older per-chunk Core ML path the variable is ignored and a line says so.
 
 | Variable | Default | Effect |
 | --- | --- | --- |
@@ -150,7 +150,7 @@ The server keeps two in-memory snapshots per prompt, so a follow-up skips the pr
 | `PROMPT_DISK_MIN_GAIN` | `2048` | A saved prompt is used only if it covers at least this many tokens more than memory already offers |
 | `PROMPT_DISK_SAVE_GAP` | `8192` | A turn is saved only if it has at least this many tokens beyond what disk already holds for it |
 
-What an entry holds: the KV rows for the whole prompt (about 33 KB per token with the int8 cache), the DeltaNet states (101 MB), the drafter ring (42 MB) and the token ids. Entries are tagged with the build, KV format, key layout, drafter and context size, and entries with another tag are ignored. They contain the conversation, so use a folder only you can read. There is no per-client switch: every client of the server is covered.
+What an entry holds: the KV rows for the whole prompt (about 33 KB per token with the int8 cache), the DeltaNet states (101 MB), the drafter ring (42 MB) and the token ids. Entries are tagged with the build (a hash of its `manifest.json`), KV format, key layout, drafter (a hash of its `main.hash`) and context size. Entries with another tag are ignored and left on disk, outside the size cap; delete the folder after changing builds. They contain the conversation, so use a folder only you can read. There is no per-client switch: every client of the server is covered.
 
 Behaviour to know:
 - A save happens inside the request that crosses the threshold and takes about 0.2 to 1.5 s (0.4 to 4.3 GB).

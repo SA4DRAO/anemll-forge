@@ -335,13 +335,15 @@ class Engine:
                                     if cfg["layer_types"][l] == "linear_attention" for s in (f"conv{j}", f"rec{j}")])
         self.fed, self.snaps = [], {}   # snapshots: "system" (before the first user turn), "turn" (before the last header)
         self.disk = None   # PROMPT_DISK_DIR: the snapshots also go to disk, so a restart or another conversation restores
-        if os.environ.get("PROMPT_DISK_DIR"):
-            from prompt_disk_cache import PromptDiskCache
+        if os.environ.get("PROMPT_DISK_DIR") and not self.v2:
+            log("[disk] PROMPT_DISK_DIR ignored: the disk tier needs the batched-prefill model")
+        elif os.environ.get("PROMPT_DISK_DIR"):
+            from prompt_disk_cache import PromptDiskCache, file_digest
             self.disk = PromptDiskCache(
                 os.environ["PROMPT_DISK_DIR"], float(os.environ.get("PROMPT_DISK_GB", "16")),
-                {"build": mdir.name, "kv": str(getattr(self.model, "kv_cache_dtype", "")),
+                {"build": file_digest(mdir / "manifest.json"), "kv": str(getattr(self.model, "kv_cache_dtype", "")),
                  "keys_t": bool(getattr(self.model, "keys_t", False)),
-                 "drafter": Path(a.draft).name if a.draft else None, "ctx": a.ctx},
+                 "drafter": file_digest(Path(a.draft) / "main.hash") if a.draft else None, "ctx": a.ctx},
                 min_gain=int(os.environ.get("PROMPT_DISK_MIN_GAIN", "2048")),
                 save_gap=int(os.environ.get("PROMPT_DISK_SAVE_GAP", "8192")), log=log)
         self.user_hdr = self.tok.encode("<|im_start|>user", add_special_tokens=False)

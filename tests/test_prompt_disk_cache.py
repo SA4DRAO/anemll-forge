@@ -11,7 +11,7 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from prompt_disk_cache import PromptDiskCache  # noqa: E402
+from prompt_disk_cache import PromptDiskCache, file_digest  # noqa: E402
 
 FP = {"build": "b", "kv": "int8", "keys_t": True, "drafter": "d", "ctx": 64}
 QUIET = lambda *a, **k: None  # noqa: E731
@@ -172,6 +172,15 @@ class PromptDiskCacheTest(unittest.TestCase):
         c.maybe_save(eng, np.arange(40, dtype=np.int32), snap)
         self.assertEqual(len(c.entries), 0)
         self.assertEqual(list(self.root.glob("*.tmp")), [])
+
+    def test_file_digest_follows_content_not_folder_name(self):
+        a, b = Path(self.tmp.name) / "x" / "coreai", Path(self.tmp.name) / "y" / "coreai"
+        for d, text in ((a, "one"), (b, "two")):
+            d.mkdir(parents=True)
+            (d / "manifest.json").write_text(text)
+        self.assertNotEqual(file_digest(a / "manifest.json"), file_digest(b / "manifest.json"))
+        (b / "manifest.json").write_text("one")
+        self.assertEqual(file_digest(a / "manifest.json"), file_digest(b / "manifest.json"))
 
     def test_an_existing_folder_keeps_its_mode(self):
         self.root.mkdir(mode=0o755)

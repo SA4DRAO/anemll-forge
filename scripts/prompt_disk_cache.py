@@ -27,6 +27,15 @@ F_NOCACHE = 48
 FORMAT = 1
 
 
+def file_digest(path):
+    """Identity of a build or drafter for the entry fingerprint: the file's SHA-256 (its name if it is missing)."""
+    path = Path(path)
+    try:
+        return hashlib.sha256(path.read_bytes()).hexdigest()[:16]
+    except OSError:
+        return path.parent.name
+
+
 def _write(path, arrays):
     n = 0
     with open(path, "wb") as f:
