@@ -1,0 +1,230 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Inkling 2 Mini explainer</title>
+<style>html,body{margin:0;background:#0f1420}canvas{display:block}</style></head>
+<body><canvas id="c" width="1280" height="720"></canvas>
+<script>
+const W = 1280, H = 720, cv = document.getElementById('c'), g = cv.getContext('2d');
+const C = {bg:'#0f1420', panel:'#18203248', line:'#2a3550', text:'#e8ecf4', mute:'#8b95a8',
+  blue:'#4f8cff', orange:'#ff9f43', green:'#3ddc97', gold:'#ffd166', pink:'#ff5fa2', teal:'#3cc6d9', red:'#ff6b6b'};
+const FONT = 'Helvetica, Arial, "DejaVu Sans", sans-serif';
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const ease = x => { x = clamp(x); return x * x * (3 - 2 * x); };
+const prog = (t, a, b) => ease((t - a) / (b - a));          // 0..1 between a and b
+const lerp = (a, b, k) => a + (b - a) * k;
+
+function font(sz, w = '') { g.font = `${w} ${sz}px ${FONT}`.trim(); }
+function text(s, x, y, sz = 26, col = C.text, w = '', align = 'left', alpha = 1) {
+  g.save(); g.globalAlpha *= alpha; font(sz, w); g.fillStyle = col; g.textAlign = align; g.textBaseline = 'alphabetic';
+  g.fillText(s, x, y); g.restore();
+}
+function wrap(s, x, y, maxW, sz = 24, col = C.text, lh = 1.35, w = '', alpha = 1) {
+  g.save(); g.globalAlpha *= alpha; font(sz, w); g.fillStyle = col; g.textAlign = 'left';
+  const words = s.split(' '); let line = '', yy = y;
+  for (const wd of words) {
+    const test = line ? line + ' ' + wd : wd;
+    if (g.measureText(test).width > maxW && line) { g.fillText(line, x, yy); line = wd; yy += sz * lh; } else line = test;
+  }
+  if (line) g.fillText(line, x, yy); g.restore(); return yy + sz * lh;
+}
+function rrect(x, y, w, h, r, fill, stroke, lw = 2, alpha = 1) {
+  g.save(); g.globalAlpha *= alpha; g.beginPath(); g.roundRect(x, y, w, h, r);
+  if (fill) { g.fillStyle = fill; g.fill(); } if (stroke) { g.strokeStyle = stroke; g.lineWidth = lw; g.stroke(); } g.restore();
+}
+function arrow(x1, y1, x2, y2, col = C.mute, lw = 3, alpha = 1, head = 11) {
+  g.save(); g.globalAlpha *= alpha; g.strokeStyle = col; g.fillStyle = col; g.lineWidth = lw;
+  g.beginPath(); g.moveTo(x1, y1); g.lineTo(x2, y2); g.stroke();
+  const a = Math.atan2(y2 - y1, x2 - x1);
+  g.beginPath(); g.moveTo(x2, y2); g.lineTo(x2 - head * Math.cos(a - .4), y2 - head * Math.sin(a - .4));
+  g.lineTo(x2 - head * Math.cos(a + .4), y2 - head * Math.sin(a + .4)); g.closePath(); g.fill(); g.restore();
+}
+function curve(x1, y1, cx, cy, x2, y2, col, lw = 3, alpha = 1, upto = 1) {
+  g.save(); g.globalAlpha *= alpha; g.strokeStyle = col; g.lineWidth = lw; g.beginPath();
+  const n = 40; for (let i = 0; i <= n * upto; i++) { const u = i / n, x = (1 - u) ** 2 * x1 + 2 * (1 - u) * u * cx + u * u * x2,
+    y = (1 - u) ** 2 * y1 + 2 * (1 - u) * u * cy + u * u * y2; i ? g.lineTo(x, y) : g.moveTo(x, y); }
+  g.stroke(); g.restore();
+}
+function header(title, sub, t0, t) {
+  const a = prog(t, t0, t0 + .6);
+  text(title, 64, 78, 44, C.text, 'bold', 'left', a);
+  if (sub) text(sub, 64, 116, 24, C.mute, '', 'left', a);
+}
+function cap(s, t, t0, t1 = 1e9) {            // bottom caption, box grows with the wrapped text
+  const a = prog(t, t0, t0 + .5) * (1 - prog(t, t1 - .4, t1));
+  font(22); const words = s.split(' '); let lines = 1, line = '';
+  for (const wd of words) { const test = line ? line + ' ' + wd : wd; if (g.measureText(test).width > W - 144 && line) { lines++; line = wd; } else line = test; }
+  const h = lines * 30 + 24, y = 700 - h;
+  g.save(); g.globalAlpha *= a; rrect(48, y, W - 96, h, 14, '#10182a', C.line, 2); g.restore();
+  wrap(s, 72, y + 34, W - 144, 22, C.text, 1.36, '', a);
+}
+function dot(x, y, r, col, alpha = 1) { g.save(); g.globalAlpha *= alpha; g.fillStyle = col; g.beginPath(); g.arc(x, y, r, 0, 7); g.fill(); g.restore(); }
+
+/* ---------------------------------------------------------------- scenes */
+const scenes = [];
+function scene(t0, t1, fn) { scenes.push({t0, t1, fn}); }
+
+// 1. title
+scene(0, 7, (t, lt) => {
+  text('Inkling 2 Mini', W / 2, 250, 84, C.text, 'bold', 'center', prog(lt, 0, .8));
+  text('a looped mixture-of-experts transformer', W / 2, 308, 34, C.teal, '', 'center', prog(lt, .6, 1.4));
+  const stats = [['26.4B', 'total parameters'], ['3.4B', 'active per pass'], ['5.4B', 'per token, 3 loops'], ['19.5 GB', 'checkpoint on disk']];
+  stats.forEach((s, i) => { const x = 140 + i * 265, a = prog(lt, 1.6 + i * .35, 2.2 + i * .35);
+    rrect(x - 16, 400 + (1 - a) * 20, 240, 130, 16, '#18213a', C.line, 2, a);
+    text(s[0], x + 104, 462 + (1 - a) * 20, 44, C.gold, 'bold', 'center', a);
+    text(s[1], x + 104, 502 + (1 - a) * 20, 20, C.mute, '', 'center', a); });
+  text('Read from the released config.json, the checkpoint tensor shapes and the transformers code', W / 2, 640, 22, C.mute, '', 'center', prog(lt, 3.5, 4.2));
+});
+
+// 2. the 24-layer stack
+scene(7, 20, (t, lt) => {
+  header('24 layers of weights', 'three zones, two kinds of attention', 7, t);
+  const x0 = 88, bw = 40, gap = 6, y = 270, bh = 90;
+  const zone = i => i < 6 ? C.blue : i < 18 ? C.orange : C.green;
+  for (let i = 0; i < 24; i++) {
+    const a = prog(lt, .8 + i * .1, 1.2 + i * .1), x = x0 + i * (bw + gap);
+    rrect(x, y + (1 - a) * 18, bw, bh, 8, zone(i), null, 0, a * .9);
+    text(String(i), x + bw / 2, y + bh + 28, 17, C.mute, '', 'center', a);
+    if ([5, 11, 17, 23].includes(i)) {                 // global attention
+      rrect(x, y - 30 + (1 - a) * 18, bw, 18, 6, C.gold, null, 0, prog(lt, 4.5 + (i / 6 | 0) * .35, 5 + (i / 6 | 0) * .35));
+    }
+  }
+  const lab = (a, b, col, s, at) => { const xa = x0 + a * (bw + gap), xb = x0 + (b + 1) * (bw + gap) - gap, al = prog(lt, at, at + .6);
+    g.save(); g.globalAlpha = al; g.strokeStyle = col; g.lineWidth = 4; g.beginPath(); g.moveTo(xa, y + bh + 62); g.lineTo(xb, y + bh + 62); g.stroke(); g.restore();
+    text(s, (xa + xb) / 2, y + bh + 96, 24, col, 'bold', 'center', al); };
+  lab(0, 5, C.blue, 'prelude (once)', 3.6); lab(6, 17, C.orange, 'loop core: layers 6-17, run 3 times', 4); lab(18, 23, C.green, 'coda (once)', 4.4);
+  const al = prog(lt, 5.2, 6);
+  rrect(x0, 160, 22, 12, 4, C.gold, null, 0, al); text('global (full) attention: layers 5, 11, 17, 23', x0 + 36, 172, 22, C.gold, '', 'left', al);
+  rrect(x0 + 560, 160, 22, 12, 4, C.mute, null, 0, al); text('the other 20: sliding window of 1024 tokens', x0 + 596, 172, 22, C.mute, '', 'left', al);
+  cap('Every layer is a sparse MoE: 128 experts, 8 routed per token, no shared expert.', t, 14.4, 20);
+});
+
+// 3. the loop
+scene(20, 37, (t, lt) => {
+  header('The loop: 24 layers, 48 layer visits', 'layers 6-17 run three times with shared weights', 20, t);
+  const pre = {x: 50, y: 290, w: 170, h: 110}, coda = {x: 1030, y: 290, w: 170, h: 110};
+  const pass = [0, 1, 2].map(i => ({x: 400, y: 150 + i * 150, w: 480, h: 96}));
+  const a0 = prog(lt, .5, 1.1);
+  rrect(pre.x, pre.y, pre.w, pre.h, 14, C.blue, null, 0, a0 * .9); text('prelude', pre.x + 85, pre.y + 52, 28, '#0b1020', 'bold', 'center', a0); text('layers 0-5', pre.x + 85, pre.y + 84, 20, '#0b1020', '', 'center', a0);
+  const ar = prog(lt, 6.2, 7);
+  wrap("all three passes start from the prelude's output", 50, 432, 190, 18, C.mute, 1.3, '', ar);
+  pass.forEach((p, i) => { const a = prog(lt, 1.6 + i * .9, 2.2 + i * .9);
+    rrect(p.x, p.y, p.w, p.h, 14, C.orange, null, 0, a * .9); text(`core, pass ${i + 1}`, p.x + 26, p.y + 44, 28, '#1b1206', 'bold', 'left', a);
+    text('layers 6-17, same weights', p.x + 26, p.y + 76, 20, '#1b1206', '', 'left', a);
+    const ak = prog(lt, 3 + i * .5, 3.5 + i * .5);
+    rrect(p.x + p.w - 176, p.y + 26, 156, 44, 10, '#18213a', C.teal, 2, ak); text('own KV cache', p.x + p.w - 98, p.y + 55, 19, C.teal, '', 'center', ak);
+    arrow(pre.x + pre.w, pre.y + pre.h / 2, p.x, p.y + p.h / 2, C.mute, 3, prog(lt, 2.2 + i * .9, 3 + i * .9)); });
+  rrect(coda.x, coda.y, coda.w, coda.h, 14, C.green, null, 0, prog(lt, 5, 5.6) * .9);
+  text('coda', coda.x + 85, coda.y + 52, 28, '#07140e', 'bold', 'center', prog(lt, 5, 5.6)); text('layers 18-23', coda.x + 85, coda.y + 84, 20, '#07140e', '', 'center', prog(lt, 5, 5.6));
+  arrow(pass[2].x + pass[2].w, pass[2].y + pass[2].h / 2, coda.x + 20, coda.y + coda.h, C.mute, 3, prog(lt, 5.2, 6));
+  wrap('only the last pass continues', 900, 492, 150, 18, C.mute, 1.3, '', prog(lt, 6.2, 7));
+  // messages between passes
+  [0, 1].forEach(i => { const a = prog(lt, 8 + i * 1.2, 9 + i * 1.2), y1 = pass[i].y + pass[i].h, y2 = pass[i + 1].y;
+    arrow(pass[i].x + 120, y1 + 2, pass[i].x + 120, y1 + 2 + (y2 - y1 - 4) * a, C.pink, 5, a, 12);
+    text('messages: query, key, value and MLP inputs, via rank-64 gates', pass[i].x + 140, y1 + 33, 19, C.pink, '', 'left', a); });
+  cap('Passes 2 and 3 restart from the prelude and read per-layer messages from the pass before. Each pass has its own KV cache.', t, 31, 37);
+});
+
+// 4. inside one layer
+scene(37, 56, (t, lt) => {
+  header('Inside one layer', null, 37, t);
+  const nodes = [
+    ['Attention input', C.pink, 'A learned attention over stored block outputs (blocks of 6 layers) replaces the plain residual sum. Full-attention layers get separate q, k and v inputs.'],
+    ['RMSNorm', C.mute, 'Full-attention layers norm q, k and v separately.'],
+    ['Attention', C.blue, 'Queries and keys L2-clipped. Keys and values pass a short causal conv. Learned relative-position bias, an attention sink, and the output gated by a sigmoid of the layer input.'],
+    ['Short conv, kernel 4', C.teal, 'Depthwise causal conv on the attention output. The reference code runs it in fp32.'],
+    ['Add residual', C.mute, 'Except at the start of each 6-layer block: there the layer input is stored as a new block state instead.'],
+    ['MLP input', C.pink, 'A second learned mix over the block outputs picks what the MoE sees.'],
+    ['Router', C.gold, 'Sigmoid scores. A bias is added only to choose the top 8 of 128 experts. Weights are renormalised, then scaled by 8.'],
+    ['8 experts', C.orange, 'SwiGLU, 1152 wide, with soft caps (gate 4, up 25). Outputs summed in fp32. No shared expert.'],
+    ['Short conv, kernel 4', C.teal, 'Same short conv again on the MoE output.'],
+    ['Add residual', C.mute, 'Layer output.'],
+  ];
+  const x = 70, w = 380, h = 38, gap = 9, y0 = 128;
+  const step = 1.55, cur = Math.min(nodes.length - 1, Math.floor((lt - .6) / step));
+  nodes.forEach((n, i) => { const a = prog(lt, .2 + i * .08, .6 + i * .08), y = y0 + i * (h + gap), on = i === cur && lt > .6, done = i < cur;
+    rrect(x, y, w, h, 10, on ? '#22304f' : '#161e33', on ? n[1] : C.line, on ? 3 : 2, a);
+    text(n[0], x + w / 2, y + 26, 21, on || done ? C.text : C.mute, on ? 'bold' : '', 'center', a);
+    if (i < nodes.length - 1) arrow(x + w / 2, y + h, x + w / 2, y + h + gap, C.line, 2, a, 7); });
+  if (lt > .6) {
+    const n = nodes[cur], k = clamp((lt - .6) / step - cur), y = y0 + cur * (h + gap) + h / 2;
+    dot(x - 22, y, 8, n[1]); arrow(x - 14, y, x - 2, y, n[1], 3, 1, 8);
+    rrect(500, 140, 720, 270, 16, '#141c30', n[1], 2); text(n[0], 530, 188, 32, n[1], 'bold');
+    wrap(n[2], 530, 236, 660, 26, C.text, 1.4, '', prog(lt, .6 + cur * step, .9 + cur * step));
+  }
+  cap('Each step in order: mix, attend, convolve, add; then mix again, route to experts, convolve, add.', t, 38, 56);
+});
+
+// 5. attention residual blocks
+scene(56, 66, (t, lt) => {
+  header('Attention residuals', 'layers read earlier outputs by learned attention, not by addition', 56, t);
+  const labels = ['block 0\nlayers 0-5', 'block 1\nlayers 6-11', 'block 2\nlayers 12-17', 'partial block\nlayer 18+'];
+  const cols = [C.blue, C.orange, C.orange, C.green];
+  const xs = [100, 100, 100, 100], ys = [180, 270, 360, 450];
+  labels.forEach((l, i) => { const a = prog(lt, .4 + i * .5, .9 + i * .5), [l1, l2] = l.split('\n');
+    rrect(xs[i], ys[i], 300, 70, 12, cols[i], null, 0, a * .85); text(l1, xs[i] + 150, ys[i] + 30, 24, '#0b1020', 'bold', 'center', a); text(l2, xs[i] + 150, ys[i] + 58, 19, '#0b1020', '', 'center', a); });
+  const q = {x: 760, y: 290, w: 330, h: 110}, aq = prog(lt, 3, 3.6);
+  rrect(q.x, q.y, q.w, q.h, 14, '#22304f', C.pink, 3, aq); text('the current layer', q.x + q.w / 2, q.y + 42, 26, C.text, 'bold', 'center', aq);
+  text('has its own learned query', q.x + q.w / 2, q.y + 78, 22, C.pink, '', 'center', aq);
+  const wts = [.15, .5, .25, .1];
+  wts.forEach((wv, i) => { const a = prog(lt, 4 + i * .3, 4.6 + i * .3) * (.55 + .45 * Math.sin(lt * 2 + i) ** 2 * 0 + .45);
+    g.save(); g.globalAlpha = a; g.strokeStyle = C.pink; g.lineWidth = 2 + wv * 12; g.beginPath(); g.moveTo(xs[i] + 300, ys[i] + 35); g.lineTo(q.x, q.y + q.h / 2); g.stroke(); g.restore();
+    text(Math.round(wv * 100) + '%', 430, ys[i] + 28 + (q.y + q.h / 2 - ys[i] - 35) * .12 - 14, 20, C.pink, 'bold', 'center', a); });
+  text('illustrative weights: the real ones are learned and depend on the input', 100, 570, 20, C.mute, '', 'left', prog(lt, 5.4, 6.2));
+  cap('The loop reuses the same idea to carry messages from one pass to the next.', t, 60, 66);
+});
+
+// 6. memory
+scene(66, 77, (t, lt) => {
+  header('Where the 19.5 GB goes', 'sizes read from the checkpoint tensor headers', 66, t);
+  const parts = [['routed experts (4-bit)', 15.67, C.orange], ['embed + unembed', 1.85, C.blue], ['attention + gates', 1.29, C.teal], ['vision tower', 0.63, C.green], ['other', 0.07, C.mute]];
+  const x0 = 70, W0 = 1140, tot = parts.reduce((s, p) => s + p[1], 0);
+  let x = x0;
+  parts.forEach((p, i) => { const wv = W0 * p[1] / tot * prog(lt, .4 + i * .3, 1.2 + i * .3);
+    rrect(x, 200, wv, 90, 8, p[2], null, 0, .92); if (wv > 150) text(p[1].toFixed(1) + ' GB', x + wv / 2, 255, 26, '#0b1020', 'bold', 'center'); x += wv + 3; });
+  parts.forEach((p, i) => { const a = prog(lt, 2 + i * .3, 2.5 + i * .3), lx = 90 + (i % 3) * 380, ly = 340 + (i / 3 | 0) * 40;
+    rrect(lx, ly - 18, 20, 20, 5, p[2], null, 0, a); text(p[0], lx + 32, ly, 22, C.text, '', 'left', a); });
+  const a2 = prog(lt, 4, 5);
+  rrect(70, 450, 1140, 140, 16, '#141c30', C.line, 2, a2);
+  text('Per token', 100, 496, 28, C.gold, 'bold', 'left', a2);
+  wrap('8 experts x 48 layer visits = 384 expert reads, about 5 MB each: roughly 2 GB of expert weights per token. Each extra pass adds about 1B active parameters.', 100, 532, 1060, 24, C.text, 1.35, '', a2);
+  cap('The checkpoint is about 20 GB, which is why Macs with 32 GB or more are listed as supported.', t, 71, 77);
+});
+
+// 7. what it means for the ANE
+scene(77, 88, (t, lt) => {
+  header('What it means for the Neural Engine', null, 77, t);
+  const cards = [
+    [C.green, 'Good fit', 'The loop core is one fixed-shape chunk, called three times. Two variants: pass 1 without messages, passes 2-3 with them.'],
+    [C.red, 'Hard part', 'Expert routing changes every layer visit. Routed experts go to the GPU or CPU: about 2 handoffs x 48 visits per token.'],
+    [C.gold, 'Unknown', 'The reference keeps the attention mix, message gates, short convs and router in fp32. Must be tested in fp16 on the ANE.'],
+  ];
+  cards.forEach((c, i) => { const a = prog(lt, .6 + i * 1.2, 1.4 + i * 1.2), x = 60 + i * 400;
+    rrect(x, 170 + (1 - a) * 24, 370, 360, 18, '#141c30', c[0], 3, a);
+    text(c[1], x + 28, 226 + (1 - a) * 24, 34, c[0], 'bold', 'left', a);
+    wrap(c[2], x + 28, 276 + (1 - a) * 24, 316, 25, C.text, 1.4, '', a); });
+  cap('The weights are 4-bit floats with block scales, so the ANE would need them requantised to lookup tables.', t, 82, 88);
+});
+
+// 8. end
+scene(88, 94, (t, lt) => {
+  text('Inkling 2 Mini', W / 2, 270, 64, C.text, 'bold', 'center', prog(lt, 0, .6));
+  text('prelude  >  core x 3 (with messages)  >  coda', W / 2, 330, 32, C.teal, '', 'center', prog(lt, .6, 1.2));
+  text('MoE: 8 of 128 experts, sliding + global attention, attention residuals, short convs', W / 2, 390, 24, C.mute, '', 'center', prog(lt, 1.2, 1.8));
+  text('Sources: thinkingmachines/Inkling-2-Mini config + weights header; transformers inkling2_loop code', W / 2, 600, 20, C.mute, '', 'center', prog(lt, 2, 2.6));
+  text('Test harness: inkling2/ref_harness.py', W / 2, 632, 20, C.mute, '', 'center', prog(lt, 2.4, 3));
+});
+
+window.DURATION = 94;
+window.draw = function (t) {
+  g.clearRect(0, 0, W, H); g.fillStyle = C.bg; g.fillRect(0, 0, W, H);
+  // faint grid
+  g.strokeStyle = '#141b2c'; g.lineWidth = 1; for (let x = 0; x < W; x += 64) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, H); g.stroke(); }
+  for (let y = 0; y < H; y += 64) { g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke(); }
+  for (const s of scenes) if (t >= s.t0 && t < s.t1) {
+    const lt = t - s.t0, fade = Math.min(prog(lt, 0, .35), 1 - prog(lt, s.t1 - s.t0 - .35, s.t1 - s.t0));
+    g.save(); g.globalAlpha = fade; s.fn(t, lt); g.restore();
+  }
+  // progress bar
+  g.fillStyle = '#1b2440'; g.fillRect(0, H - 6, W, 6); g.fillStyle = C.teal; g.fillRect(0, H - 6, W * clamp(t / DURATION), 6);
+};
+draw(0);
+</script></body></html>
